@@ -8,6 +8,7 @@ import { HERO_XML } from "@/drawings/hero";
 import { PARCELS_XML } from "@/drawings/parcels";
 import { SHOP_XML } from "@/drawings/shop";
 import { MONEY_XML } from "@/drawings/money";
+import { SUPPORT_XML } from "@/drawings/support";
 
 export const INK = "#16202A";
 
@@ -16,6 +17,7 @@ const DRAWINGS: Record<string, { xml: string; ratio: number }> = {
   parcels: { xml: PARCELS_XML, ratio: 0.8743169398907104 },
   shop: { xml: SHOP_XML, ratio: 0.8518518518518519 },
   money: { xml: MONEY_XML, ratio: 0.966183574879227 },
+  support: { xml: SUPPORT_XML, ratio: 0.9807692307692307 },
 };
 
 /** Gentle up/down float used by every illustration. */

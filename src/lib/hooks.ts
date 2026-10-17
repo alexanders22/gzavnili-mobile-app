@@ -6,7 +6,7 @@ import { clearToken, setToken } from "./token";
 export const USA_BRANCH_ID = "1ad52c30-2978-4fe0-9db4-ecbba1e04365";
 
 export type Customer = {
-  id: string; room_number?: string; profile_complete?: boolean; wallet_balance?: number;
+  id: string; first_name?: string; last_name?: string; room_number?: string; profile_complete?: boolean; wallet_balance?: number;
   profile?: { first_name_ka?: string; first_name_en?: string; last_name_ka?: string; last_name_en?: string };
 };
 export type WarehouseAddress = { id: string; street: string; city: string; state?: string; country: string; zipCode: string; tel?: string };
