@@ -5,11 +5,13 @@ import { noteFont } from "@/lib/fonts";
 import { useLang } from "@/lib/i18n";
 import { useTokens } from "@/ui";
 import { HERO_XML } from "@/drawings/hero";
+import { PARCELS_XML } from "@/drawings/parcels";
 
 export const INK = "#16202A";
 
 const DRAWINGS: Record<string, { xml: string; ratio: number }> = {
   hero: { xml: HERO_XML, ratio: 1.7567567567567568 },
+  parcels: { xml: PARCELS_XML, ratio: 0.8743169398907104 },
 };
 
 /** Gentle up/down float used by every illustration. */

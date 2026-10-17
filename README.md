@@ -13,7 +13,8 @@ come straight from that bundle, not from eyeballing.
 | Skeleton (theme, fonts, i18n, settings store, API client, UI kit, header, floating nav, splash, assistant button) | ✅ |
 | Sign-in / sign-up | ✅ |
 | Home | ✅ |
-| Parcels, Shop, Send, More, Address, Wallet, Loyalty, Calculator, Rates, Settings, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Parcels (incoming with status filter, outgoing) | ✅ |
+| Shop, Send, More, Address, Wallet, Loyalty, Calculator, Rates, Settings, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

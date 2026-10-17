@@ -56,6 +56,12 @@ const reels = [
   { id: "r3", tone: "navy", tagKa: "რჩევა", tagEn: "TIP", titleKa: "როგორ დავადეკლარიროთ", titleEn: "How to declare in 30 s", emoji: "📝", media_type: null, media_url: null, seen: true },
 ];
 
+const outgoing = [
+  { id: "x1", status: "CREATED", tracking_number: "GZ-OUT-535562", weight: "2.00", price: "62.00", destination: "USA", destination_country: { code: "US", flag: "🇺🇸", name: "USA", nameKa: "აშშ" }, recipient_name: "David Kim", recipients: [] },
+  { id: "x2", status: "IN TRANSIT", tracking_number: "GZ-OUT-747242", weight: "2.00", price: "52.00", destination: "Germany", destination_country: { code: "DE", flag: "🇩🇪", name: "Germany", nameKa: "გერმანია" }, recipient_name: "Anna Schmidt", recipients: [] },
+  { id: "x3", status: "DELIVERED", tracking_number: "GZ-OUT-793340", weight: "10.00", price: "254.00", destination: "USA", destination_country: { code: "US", flag: "🇺🇸", name: "USA", nameKa: "აშშ" }, recipient_name: "John Miller", recipients: [{ name_en: "John Miller" }, { name_en: "Mary Miller" }] },
+];
+
 function handle(method: string, path: string, body: any) {
   const p = path.split("?")[0];
   if (p.includes("/v1/auth/login")) return { access_token: "demo.token", refresh_token: "demo.token" };
@@ -71,6 +77,7 @@ function handle(method: string, path: string, body: any) {
     return orders.filter((o) => o.group === g).map(withButtons);
   }
   if (p.includes("/orders/getUnpaidOrders")) return orders.filter((o) => !o.payed && o.group === "RECEIVED_IN_TBILISI_WAREHOUSE").map(withButtons);
+  if (p === "/outgoing" && method === "get") return outgoing;
   if (p.includes("/wallet")) return { balance: customer.wallet_balance, currency: "GEL" };
   if (p.includes("/loyalty")) return { points: 1240, tier: { name: "Gold", emoji: "🥇" }, progress: 62, next_tier: "Platinum" };
   if (p.includes("/reels")) return method === "post" ? { ok: true } : reels;

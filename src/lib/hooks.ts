@@ -12,7 +12,20 @@ export type Customer = {
 export type WarehouseAddress = { id: string; street: string; city: string; state?: string; country: string; zipCode: string; tel?: string };
 export type Loyalty = { points: number; tier: { name: string; emoji: string }; progress: number };
 export type Reel = { id: string; tone: "green" | "blue" | "navy"; tagKa: string; tagEn: string; titleKa: string; titleEn: string; emoji?: string | null; media_type?: "image" | "video" | null; media_url?: string | null; seen?: boolean };
-export type Order = { id: string; name: string; status: string; group: string; price?: string | null; payed?: boolean; buttons?: { payment_enable?: boolean } };
+export type OrderButtons = {
+  declaration_enable?: boolean; custom_enable?: boolean; custom_right_icon_enable?: boolean; delivery_enable?: boolean;
+  payment_enable?: boolean; is_payment_invoice_enabled?: boolean;
+};
+export type Order = {
+  id: string; name?: string | null; tracking_number?: string | null; status: string; group: string; weight?: string | null; price?: string | null;
+  payed?: boolean; declaration_status?: string | null; delivery_status?: string | null; delivery_method?: string | null; pickup_status?: string | null;
+  timeSlot?: string | null; points_awarded?: number | null; buttons?: OrderButtons;
+};
+export type OutgoingCountry = { code?: string; flag: string; name: string; nameKa: string };
+export type Outgoing = {
+  id: string; status: string; tracking_number: string; weight: string | number; price?: string | number | null; destination?: string;
+  destination_country?: OutgoingCountry | null; recipient_name?: string | null; recipients?: { name_en?: string; name_ka?: string }[];
+};
 
 export function useLogin() {
   const qc = useQueryClient();
@@ -89,3 +102,6 @@ export function useMarkReelSeen() {
     onSuccess: (id) => qc.setQueryData<Reel[]>(["reels"], (r) => r?.map((x) => (x.id === id ? { ...x, seen: true } : x))),
   });
 }
+
+export const useOutgoing = () =>
+  useQuery<Outgoing[]>({ queryKey: ["outgoing"], refetchInterval: 8000, queryFn: async () => { const d = await api.get("/outgoing"); return Array.isArray(d) ? d : []; } });
