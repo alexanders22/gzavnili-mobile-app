@@ -27,8 +27,9 @@ export default function TabsLayout() {
       <Tabs.Screen name="add-tracking" options={{ title: ka ? "დამატება" : "Add", tabBarIcon: icon("add-circle") }} />
       <Tabs.Screen name="address" options={{ title: ka ? "მისამართი" : "Address", tabBarIcon: icon("location-outline") }} />
       <Tabs.Screen name="more" options={{ title: t("more"), tabBarIcon: icon("ellipsis-horizontal") }} />
-      <Tabs.Screen name="shop" options={{ href: null }} />
-      <Tabs.Screen name="send" options={{ href: null }} />
+      {/* Tab bar is hidden, so these stay linkable (/shop, /send) without appearing anywhere. */}
+      <Tabs.Screen name="shop" options={{ title: t("shop"), tabBarIcon: icon("bag-outline") }} />
+      <Tabs.Screen name="send" options={{ title: t("send"), tabBarIcon: icon("cash-outline") }} />
     </Tabs>
   );
 }

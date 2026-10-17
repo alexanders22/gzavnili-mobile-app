@@ -26,7 +26,7 @@ Route → module id (from module 9):
 | (tabs)/more | 1065 | | rates | 1173 |
 | (tabs)/parcels | 1066 ✅ | | reels | 1174 |
 | (tabs)/send | 1071 | | referral | 1182 |
-| (tabs)/shop | 1072 | | settings | 1183 |
+| (tabs)/shop | 1072 ✅ | | settings | 1183 |
 | _layout | 1073 ✅ | | sign-in | 1184 ✅ |
 | add-incoming | 1130 | | wallet | 1185 |
 | add-outgoing | 1131 | | | |
@@ -40,6 +40,7 @@ Route → module id (from module 9):
 | | | | illustrations (Drawing, DrawnBird…) | 899 (hero + bird ✅) |
 | | | | Picker / BottomSheet | 1028 / 1029 ✅ |
 | | | | ParcelProgress / STATUS_GROUPS / ProfileGateCard | 1070 / 1067 / 1033 ✅ |
+| | | | ModuleTile + NewBadge / shop catalog | 909 / 1032 ✅ |
 | | | | hand-drawn icon wrapper / stroke map | 15 / 275 ✅ |
 | | | | demo adapter | 1024 ✅ |
 

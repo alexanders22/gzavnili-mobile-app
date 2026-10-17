@@ -1,6 +1,7 @@
 // Shop catalog (demo data, mirrors the original app).
 export type Product = { id: string; name: string; store: string; cat: string; emoji: string; price: number; was?: number };
 export type Category = { id: string; ka: string; en: string; icon: string };
+export type Store = { name: string; emoji: string; blurb: string; eta: string };
 export const USD_TO_GEL = 2.7;
 export const CATEGORIES: Category[] = [
   {
@@ -38,6 +39,68 @@ export const CATEGORIES: Category[] = [
     "ka": "სპორტი",
     "en": "Sport",
     "icon": "barbell-outline"
+  }
+];
+export const STORES: Store[] = [
+  {
+    "name": "Amazon",
+    "emoji": "📦",
+    "blurb": "Everything store",
+    "eta": "7–10 days"
+  },
+  {
+    "name": "Nike",
+    "emoji": "👟",
+    "blurb": "Sportswear",
+    "eta": "8–12 days"
+  },
+  {
+    "name": "Apple",
+    "emoji": "💻",
+    "blurb": "Electronics",
+    "eta": "6–9 days"
+  },
+  {
+    "name": "Zara",
+    "emoji": "👗",
+    "blurb": "Fashion",
+    "eta": "9–14 days"
+  },
+  {
+    "name": "eBay",
+    "emoji": "🛒",
+    "blurb": "Marketplace",
+    "eta": "10–15 days"
+  },
+  {
+    "name": "SHEIN",
+    "emoji": "🧥",
+    "blurb": "Fast fashion",
+    "eta": "12–18 days"
+  },
+  {
+    "name": "Foot Locker",
+    "emoji": "👟",
+    "blurb": "Sneakers",
+    "eta": "8–12 days"
+  },
+  {
+    "name": "Sephora",
+    "emoji": "💄",
+    "blurb": "Beauty",
+    "eta": "7–11 days"
+  },
+  {
+    "name": "IKEA",
+    "emoji": "🛋️",
+    "blurb": "Home goods",
+    "eta": "14–20 days"
+  },
+  {
+    "name": "ASOS",
+    "emoji": "👕",
+    "blurb": "Clothing",
+    "eta": "9–14 days"
   }
 ];
 export const PRODUCTS: Product[] = [
@@ -258,7 +321,7 @@ export const PRODUCTS: Product[] = [
 
 export const discountOf = (p: Product) => (p.was ? Math.round(100 * (1 - p.price / p.was)) : 0);
 export const categoryById = (id: string) => CATEGORIES.find((c) => c.id === id);
-export const isCategoryId = (id?: string | null) => !!id && CATEGORIES.some((c) => c.id === id);
+export const isCategoryId = (id?: string | null): id is string => !!id && CATEGORIES.some((c) => c.id === id);
 
 /** Today's recommended deals: the category with the best discount rotates daily. */
 export function recommendedDeals(n = 8): { cat: string; products: Product[] } {

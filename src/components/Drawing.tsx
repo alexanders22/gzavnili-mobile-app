@@ -6,12 +6,14 @@ import { useLang } from "@/lib/i18n";
 import { useTokens } from "@/ui";
 import { HERO_XML } from "@/drawings/hero";
 import { PARCELS_XML } from "@/drawings/parcels";
+import { SHOP_XML } from "@/drawings/shop";
 
 export const INK = "#16202A";
 
 const DRAWINGS: Record<string, { xml: string; ratio: number }> = {
   hero: { xml: HERO_XML, ratio: 1.7567567567567568 },
   parcels: { xml: PARCELS_XML, ratio: 0.8743169398907104 },
+  shop: { xml: SHOP_XML, ratio: 0.8518518518518519 },
 };
 
 /** Gentle up/down float used by every illustration. */
@@ -64,6 +66,19 @@ export function Note({ children, align = "right", size = 18, tilt = -5, color, h
           <Path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" fill="none" stroke={color ?? theme.brandText} strokeWidth={1.7} strokeLinejoin="round" />
         </Svg>
       ) : null}
+    </View>
+  );
+}
+
+type BandProps = { name: keyof typeof DRAWINGS; note: string; bg?: string; ink?: string; width?: number; style?: StyleProp<ViewStyle> };
+
+/** Tinted band: handwritten note on the left, floating sketch on the right. */
+export function DrawnBand({ name, note, bg, ink, width = 150, style }: BandProps) {
+  const { theme } = useTokens();
+  return (
+    <View style={[{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8, backgroundColor: bg ?? theme.tint, borderRadius: 24, paddingLeft: 18, paddingRight: 10, paddingVertical: 12, overflow: "hidden" }, style]}>
+      <Note align="left" size={21} tilt={-6} color={ink} style={{ flex: 1, minWidth: 0 }}>{note}</Note>
+      <Drawing name={name} width={width} float />
     </View>
   );
 }

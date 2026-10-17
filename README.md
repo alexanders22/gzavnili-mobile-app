@@ -14,7 +14,8 @@ come straight from that bundle, not from eyeballing.
 | Sign-in / sign-up | ✅ |
 | Home | ✅ |
 | Parcels (incoming with status filter, outgoing) | ✅ |
-| Shop, Send, More, Address, Wallet, Loyalty, Calculator, Rates, Settings, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Shop (search, chips, filter sheet, product grid, stores) | ✅ |
+| Send, More, Address, Wallet, Loyalty, Calculator, Rates, Settings, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run
