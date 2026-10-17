@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Pressable, ScrollView, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@/ui/Icon";
 import { router } from "expo-router";
 import { radius, space, type Theme } from "@/lib/theme";
 import { useSettings } from "@/lib/settings";

@@ -39,6 +39,7 @@ Route → module id (from module 9):
 | index (redirect) | 1167 ✅ | | api hooks | 920 (subset ✅) |
 | | | | illustrations (Drawing, DrawnBird…) | 899 (hero + bird ✅) |
 | | | | Picker / BottomSheet | 1028 / 1029 ✅ |
+| | | | hand-drawn icon wrapper / stroke map | 15 / 275 ✅ |
 | | | | demo adapter | 1024 ✅ |
 
 A module's dependency list is at its end: `1030, [11, 15, 276, …]`; the n-th

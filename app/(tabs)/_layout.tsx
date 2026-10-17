@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@/ui/Icon";
 import { useT, useLang } from "@/lib/i18n";
 import { useTokens } from "@/ui";
 

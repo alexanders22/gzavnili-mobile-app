@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@/ui/Icon";
 import { font, radius, space } from "@/lib/theme";
 import { useLang } from "@/lib/i18n";
 import { Body, Card, Screen, Title, useTokens } from "@/ui";

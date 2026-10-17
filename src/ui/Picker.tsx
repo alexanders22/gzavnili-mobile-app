@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, Pressable, ScrollView, View, StyleProp, ViewStyle } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@/ui/Icon";
 import { font, radius, space } from "@/lib/theme";
 import { Body, useTokens } from "./index";
 import { BottomSheet } from "./BottomSheet";

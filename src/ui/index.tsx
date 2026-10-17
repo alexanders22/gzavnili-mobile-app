@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, Text, TextStyle, View, ViewStyle, StyleProp } from "react-native";
 import { SafeAreaView, type Edge } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@/ui/Icon";
 import { darkTheme, font, lightTheme, radius, space, type Theme } from "@/lib/theme";
 import { useSettings } from "@/lib/settings";
 import { displayFont, textFont } from "@/lib/fonts";

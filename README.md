@@ -39,7 +39,7 @@ src/lib/i18n.ts      ka/en strings
 src/lib/settings.ts  zustand store persisted as "gz.settings" (lang, mode, modules…)
 src/lib/api.ts       fetch client with Bearer token, 401 → sign-in; demo adapter in demo.ts
 src/lib/hooks.ts     react-query hooks over the API
-src/ui/              Screen, Title, Body, Card, Btn, Pill, Picker, BottomSheet, TileGrid, header + bottom nav, logo
+src/ui/              Screen, Title, Body, Card, Btn, Pill, Picker, BottomSheet, TileGrid, header + bottom nav, logo, Icon (hand-drawn Ionicons)
 src/components/      DrawnBird, Drawing/Note (hero sketch), ReelsStrip, DealsStrip, TransitAnimation, AssistantFab, LaunchSplash
 src/data/shop.ts     demo shop catalog
 tools/original/      the prettified original bundle + extractor
