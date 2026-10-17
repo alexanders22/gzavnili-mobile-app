@@ -26,7 +26,7 @@ Route → module id (from module 9):
 | (tabs)/more | 1065 ✅ | | rates | 1173 |
 | (tabs)/parcels | 1066 ✅ | | reels | 1174 |
 | (tabs)/send | 1071 ✅ | | referral | 1182 |
-| (tabs)/shop | 1072 ✅ | | settings | 1183 |
+| (tabs)/shop | 1072 ✅ | | settings | 1183 ✅ |
 | _layout | 1073 ✅ | | sign-in | 1184 ✅ |
 | add-incoming | 1130 | | wallet | 1185 |
 | add-outgoing | 1131 | | | |

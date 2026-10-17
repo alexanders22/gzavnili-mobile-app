@@ -10,7 +10,7 @@ import { NotoSansGeorgian_400Regular, NotoSansGeorgian_500Medium, NotoSansGeorgi
 import { NotoSerifGeorgian_500Medium } from "@expo-google-fonts/noto-serif-georgian";
 import { InstrumentSerif_400Regular_Italic } from "@expo-google-fonts/instrument-serif";
 import { darkTheme, lightTheme } from "@/lib/theme";
-import { useSettings } from "@/lib/settings";
+import { useIsDark } from "@/lib/settings";
 import { FONT_ASSETS } from "@/lib/fonts";
 import { getToken } from "@/lib/token";
 import { AssistantFab } from "@/components/AssistantFab";
@@ -19,7 +19,7 @@ import { LaunchSplash } from "@/components/LaunchSplash";
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 30_000 } } });
 
 export default function RootLayout() {
-  const isDark = useSettings((s) => s.mode) === "dark";
+  const isDark = useIsDark();
   const theme = isDark ? darkTheme : lightTheme;
   const [tokenChecked, setTokenChecked] = useState(false);
   const [splash, setSplash] = useState(true);

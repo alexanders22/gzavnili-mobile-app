@@ -17,7 +17,8 @@ come straight from that bundle, not from eyeballing.
 | Shop (search, chips, filter sheet, product grid, stores) | ✅ |
 | Send Money (amount → recipient → confirm → done) | ✅ |
 | More (profile card, core + optional modules, support band) | ✅ |
-| Address, Wallet, Loyalty, Calculator, Rates, Settings, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Settings (profile, light/dark/system, language, modules, notifications, sounds, sign out) | ✅ |
+| Address, Wallet, Loyalty, Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

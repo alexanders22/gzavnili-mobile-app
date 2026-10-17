@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useColorScheme } from "react-native";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { MODULES } from "./modules";
 
 export type Lang = "ka" | "en";
-export type Mode = "light" | "dark";
+export type Mode = "light" | "dark" | "system";
 
 type Settings = {
   lang: Lang;
@@ -52,4 +53,11 @@ export const useSettings = create<Settings>()(
 export function useTabModules() {
   const enabled = useSettings((s) => s.enabled);
   return MODULES.filter((m) => m.tab && (m.core || enabled[m.id] !== false));
+}
+
+/** Dark or light after resolving the "system" mode against the device scheme. */
+export function useIsDark() {
+  const mode = useSettings((s) => s.mode);
+  const scheme = useColorScheme();
+  return mode === "system" ? scheme === "dark" : mode === "dark";
 }

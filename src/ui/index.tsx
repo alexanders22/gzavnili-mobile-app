@@ -3,13 +3,13 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, Text, Tex
 import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 import { Ionicons } from "@/ui/Icon";
 import { darkTheme, font, lightTheme, radius, space, type Theme } from "@/lib/theme";
-import { useSettings } from "@/lib/settings";
+import { useIsDark, useSettings } from "@/lib/settings";
 import { displayFont, textFont } from "@/lib/fonts";
 import { CONTENT_MAX, useIsDesktop } from "@/lib/layout";
 import { AppBottomNav, AppHeader, BOTTOM_NAV_SPACE } from "./AppChrome";
 
 export function useTokens(): { theme: Theme; isDark: boolean } {
-  const isDark = useSettings((s) => s.mode) === "dark";
+  const isDark = useIsDark();
   return { theme: isDark ? darkTheme : lightTheme, isDark };
 }
 
