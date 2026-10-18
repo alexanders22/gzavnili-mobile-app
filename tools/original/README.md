@@ -32,7 +32,7 @@ Route → module id (from module 9):
 | add-outgoing | 1131 | | | |
 | assistant | 1139 | | **shared** | |
 | buyforme | 1158 | | ui kit (Screen/Body/Card/Btn…) | 890 ✅ |
-| calculator | 1159 | | header + bottom nav | 894 ✅ |
+| calculator | 1159 ✅ | | header + bottom nav | 894 ✅ |
 | customs/[id] | 1160 | | theme tokens | 895 ✅ |
 | declare/[id] | 1162 | | fonts | 891 ✅ |
 | delivery/[id] | 1164 | | i18n | 877 ✅ |

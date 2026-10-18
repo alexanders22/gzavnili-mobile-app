@@ -1,5 +1,5 @@
 // Data hooks (react-query) — the subset the skeleton and the home screen need.
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, authApi } from "./api";
 import { clearToken, setToken } from "./token";
 
@@ -130,3 +130,20 @@ export function useMarkReelSeen() {
 
 export const useOutgoing = () =>
   useQuery<Outgoing[]>({ queryKey: ["outgoing"], refetchInterval: 8000, queryFn: async () => { const d = await api.get("/outgoing"); return Array.isArray(d) ? d : []; } });
+
+/* ---------------- price calculator ---------------- */
+export type CalcOrigin = { code: string; name: string; nameKa: string; flag: string; days: string; currency: string };
+export type CalcCountry = { code: string; name: string; nameKa: string; flag: string; days: string; perKg: number };
+export type CalcMeta = {
+  origins: CalcOrigin[]; countries: CalcCountry[]; max_weight: number; fx: Record<string, number>;
+  fees: { delivery: number; repack: number; pickup: number; customs_threshold: number; customs_rate: number };
+};
+export type CalcParams = { direction: "in" | "out"; origin: string; country: string; weight: number; value: number; courier: boolean; repack: boolean };
+export type CalcQuote = {
+  direction: "in" | "out"; weight: number; rate: number; days: string; total: number; points: number;
+  lines: { key: string; amount: number }[]; customs: { required: boolean; value_gel: number; threshold: number; rate: number } | null;
+};
+
+export const useCalculatorMeta = () => useQuery<CalcMeta>({ queryKey: ["calculatorMeta"], staleTime: Infinity, queryFn: () => api.get("/calculator/meta") });
+export const useCalculatorQuote = (params: CalcParams) =>
+  useQuery<CalcQuote>({ queryKey: ["calculator", params], placeholderData: keepPreviousData, staleTime: 60_000, queryFn: () => api.post("/calculator", params) });

@@ -21,7 +21,8 @@ come straight from that bundle, not from eyeballing.
 | Address (warehouse picker, room number, copyable fields) | ✅ |
 | Wallet (balance, outstanding, transactions, cards, top-up sheet) | ✅ |
 | Loyalty (points card, active rewards, tiers, rewards with redeem sheet, history) | ✅ |
-| Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Calculator (receive/send, route, weight, item value, delivery options, live quote) | ✅ |
+| Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

@@ -102,8 +102,58 @@ function loyaltyView() {
   return { points: loyalty.points, tier, next, to_next, progress, tiers: TIERS, rewards: loyalty.rewards, active_rewards: loyalty.active_rewards, history: loyalty.history };
 }
 
+// Pricing mirrors the backend's logic.js so the demo quotes match the live API.
+const CALC = {
+  origins: [
+    { code: "usa", name: "USA", nameKa: "აშშ", flag: "🇺🇸", days: "7–10", currency: "USD" },
+    { code: "china", name: "China", nameKa: "ჩინეთი", flag: "🇨🇳", days: "10–14", currency: "CNY" },
+  ],
+  countries: [
+    { code: "US", name: "USA", nameKa: "აშშ", flag: "🇺🇸", days: "5–8", perKg: 24 },
+    { code: "DE", name: "Germany", nameKa: "გერმანია", flag: "🇩🇪", days: "4–6", perKg: 19 },
+    { code: "GB", name: "United Kingdom", nameKa: "დიდი ბრიტანეთი", flag: "🇬🇧", days: "4–7", perKg: 21 },
+    { code: "TR", name: "Türkiye", nameKa: "თურქეთი", flag: "🇹🇷", days: "2–4", perKg: 12 },
+  ],
+  max_weight: 30,
+  fx: { USD: 2.7, CNY: 0.37, GEL: 1 } as Record<string, number>,
+  fees: { delivery: 5, repack: 5, pickup: 5, customs_threshold: 300, customs_rate: 0.18 },
+  ratePerKg: 16, insurance: 2, service: 3, customsMin: 15, outBase: 9,
+};
+const round2 = (n: number) => Math.round(n * 100) / 100;
+function calculatorQuote(q: any) {
+  const kg = Math.round(Number(q.weight) * 10) / 10;
+  if (!(kg > 0 && kg <= CALC.max_weight)) return null;
+  const points = Math.max(10, Math.round(5 * kg));
+  const sum = (l: { amount: number }[]) => round2(l.reduce((s, x) => s + x.amount, 0));
+  if (q.direction === "out") {
+    const c = CALC.countries.find((x) => x.code === q.country);
+    if (!c) return null;
+    const lines = [{ key: "freight", amount: round2(kg * c.perKg) }, { key: "handling", amount: CALC.outBase }, { key: "pickup", amount: q.courier ? CALC.fees.pickup : 0 }];
+    return { direction: "out", weight: kg, rate: c.perKg, days: c.days, lines, customs: null, points, total: sum(lines) };
+  }
+  const o = CALC.origins.find((x) => x.code === q.origin);
+  if (!o) return null;
+  const valueGel = round2(Math.max(0, Number(q.value) || 0) * CALC.fx[o.currency]);
+  const required = valueGel > CALC.fees.customs_threshold;
+  const lines = [
+    { key: "freight", amount: round2(kg * CALC.ratePerKg) },
+    { key: "insurance", amount: CALC.insurance },
+    { key: "service", amount: CALC.service },
+    { key: "repack", amount: q.repack ? CALC.fees.repack : 0 },
+    { key: "delivery", amount: q.courier ? CALC.fees.delivery : 0 },
+    { key: "customs", amount: required ? round2(Math.max(CALC.customsMin, valueGel * CALC.fees.customs_rate)) : 0 },
+  ];
+  return { direction: "in", weight: kg, rate: CALC.ratePerKg, days: o.days, lines, customs: { required, value_gel: valueGel, threshold: CALC.fees.customs_threshold, rate: CALC.fees.customs_rate }, points, total: sum(lines) };
+}
+
 function handle(method: string, path: string, body: any) {
   const p = path.split("?")[0];
+  if (p === "/calculator/meta") return { origins: CALC.origins, countries: CALC.countries, max_weight: CALC.max_weight, fx: CALC.fx, fees: CALC.fees };
+  if (p === "/calculator" && method === "post") {
+    const q = calculatorQuote(body ?? {});
+    if (!q) throw Object.assign(new Error("bad quote"), { response: { status: 400, data: { message: `Choose a route and a weight up to ${CALC.max_weight} kg` } } });
+    return q;
+  }
   if (p.includes("/v1/auth/login")) return { access_token: "demo.token", refresh_token: "demo.token" };
   if (p.includes("/customers/search/userId")) return customer;
   if (p.includes("/addresses") && !p.includes("customer-addresses")) return warehouses;
