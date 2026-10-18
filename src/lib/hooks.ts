@@ -90,7 +90,18 @@ export const useUnpaidOrders = (customerId?: string) =>
 export const useWarehouseAddresses = () =>
   useQuery<WarehouseAddress[]>({ queryKey: ["addresses"], queryFn: async () => (await api.get("/addresses")) ?? [] });
 
-export const useWallet = () => useQuery<{ balance: number }>({ queryKey: ["wallet"], queryFn: () => api.get("/wallet") });
+export type WalletCard = { id: string; maskedPan: string; cardType: string; isDefault?: boolean; expiryDate?: string };
+export type WalletTx = { id: string; kind: "parcel" | "outgoing" | "topup"; status: "COMPLETED" | "PENDING" | "REJECTED" | string; amount: number | string; created_at: string };
+export type Wallet = { balance: number; cards: WalletCard[]; transactions: WalletTx[] };
+export const useWallet = () => useQuery<Wallet>({ queryKey: ["wallet"], queryFn: () => api.get("/wallet") });
+
+export function useTopUp() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (amount: number) => (await api.post("/wallet/topup", { amount })) as { balance: number },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["wallet"] }); qc.invalidateQueries({ queryKey: ["customer"] }); },
+  });
+}
 export const useLoyalty = () => useQuery<Loyalty>({ queryKey: ["loyalty"], queryFn: () => api.get("/loyalty") });
 export const useReels = () =>
   useQuery<Reel[]>({ queryKey: ["reels"], queryFn: async () => { const d = await api.get("/reels"); return Array.isArray(d) ? d : []; } });

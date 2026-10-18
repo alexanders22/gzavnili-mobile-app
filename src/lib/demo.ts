@@ -62,6 +62,17 @@ const outgoing = [
   { id: "x3", status: "DELIVERED", tracking_number: "GZ-OUT-793340", weight: "10.00", price: "254.00", destination: "USA", destination_country: { code: "US", flag: "🇺🇸", name: "USA", nameKa: "აშშ" }, recipient_name: "John Miller", recipients: [{ name_en: "John Miller" }, { name_en: "Mary Miller" }] },
 ];
 
+const walletCards = [
+  { id: "card-1", maskedPan: "4821", cardType: "visa", isDefault: true, expiryDate: "09/28" },
+  { id: "card-2", maskedPan: "7734", cardType: "mc", isDefault: false, expiryDate: "02/27" },
+];
+const walletTx: { id: string; kind: "parcel" | "outgoing" | "topup"; status: string; amount: number; created_at: string }[] = [
+  { id: "t1", kind: "topup", status: "COMPLETED", amount: 100, created_at: daysAgo(2) },
+  { id: "t2", kind: "parcel", status: "COMPLETED", amount: 57.5, created_at: daysAgo(10) },
+  { id: "t3", kind: "outgoing", status: "PENDING", amount: 62, created_at: daysAgo(1) },
+  { id: "t4", kind: "parcel", status: "REJECTED", amount: 24, created_at: daysAgo(15) },
+];
+
 function handle(method: string, path: string, body: any) {
   const p = path.split("?")[0];
   if (p.includes("/v1/auth/login")) return { access_token: "demo.token", refresh_token: "demo.token" };
@@ -78,7 +89,13 @@ function handle(method: string, path: string, body: any) {
   }
   if (p.includes("/orders/getUnpaidOrders")) return orders.filter((o) => !o.payed && o.group === "RECEIVED_IN_TBILISI_WAREHOUSE").map(withButtons);
   if (p === "/outgoing" && method === "get") return outgoing;
-  if (p.includes("/wallet")) return { balance: customer.wallet_balance, currency: "GEL" };
+  if (p === "/wallet/topup" && method === "post") {
+    const amount = Number(body?.amount ?? 0);
+    customer.wallet_balance = Math.round((customer.wallet_balance + amount) * 100) / 100;
+    walletTx.unshift({ id: "t" + Date.now(), kind: "topup", status: "COMPLETED", amount, created_at: new Date().toISOString() });
+    return { balance: customer.wallet_balance };
+  }
+  if (p.includes("/wallet")) return { balance: customer.wallet_balance, currency: "GEL", cards: walletCards, transactions: walletTx };
   if (p.includes("/loyalty")) return { points: 1240, tier: { name: "Gold", emoji: "🥇" }, progress: 62, next_tier: "Platinum" };
   if (p.includes("/reels")) return method === "post" ? { ok: true } : reels;
   if (p.includes("/referral")) return { code: "GZ-DEMO-1001", invited: 3, credited: 1, bonus: 150 };

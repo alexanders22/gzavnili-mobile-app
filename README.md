@@ -19,7 +19,8 @@ come straight from that bundle, not from eyeballing.
 | More (profile card, core + optional modules, support band) | ✅ |
 | Settings (profile, light/dark/system, language, modules, notifications, sounds, sign out) | ✅ |
 | Address (warehouse picker, room number, copyable fields) | ✅ |
-| Wallet, Loyalty, Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Wallet (balance, outstanding, transactions, cards, top-up sheet) | ✅ |
+| Loyalty, Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run
