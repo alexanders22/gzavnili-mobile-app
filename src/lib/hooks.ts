@@ -10,7 +10,13 @@ export type Customer = {
   profile?: { first_name_ka?: string; first_name_en?: string; last_name_ka?: string; last_name_en?: string };
 };
 export type WarehouseAddress = { id: string; street: string; city: string; state?: string; country: string; zipCode: string; tel?: string };
-export type Loyalty = { points: number; tier: { name: string; emoji: string }; progress: number };
+export type LoyaltyTier = { name: string; emoji: string; from: number; rate: number };
+export type LoyaltyReward = { id: string; title_ka: string; title_en: string; cost: number; available: boolean };
+export type LoyaltyEntry = { id: string; label: string; points: number; created_at: string };
+export type Loyalty = {
+  points: number; tier: LoyaltyTier; next: LoyaltyTier | null; to_next: number; progress: number;
+  tiers: LoyaltyTier[]; rewards: LoyaltyReward[]; active_rewards: LoyaltyReward[]; history: LoyaltyEntry[];
+};
 export type Reel = { id: string; tone: "green" | "blue" | "navy"; tagKa: string; tagEn: string; titleKa: string; titleEn: string; emoji?: string | null; media_type?: "image" | "video" | null; media_url?: string | null; seen?: boolean };
 export type OrderButtons = {
   declaration_enable?: boolean; custom_enable?: boolean; custom_right_icon_enable?: boolean; delivery_enable?: boolean;
@@ -103,6 +109,14 @@ export function useTopUp() {
   });
 }
 export const useLoyalty = () => useQuery<Loyalty>({ queryKey: ["loyalty"], queryFn: () => api.get("/loyalty") });
+
+export function useRedeemReward() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (rewardId: string) => (await api.post("/loyalty/redeem", { reward_id: rewardId })) as Loyalty,
+    onSuccess: (data) => { qc.setQueryData(["loyalty"], data); qc.invalidateQueries({ queryKey: ["customer"] }); },
+  });
+}
 export const useReels = () =>
   useQuery<Reel[]>({ queryKey: ["reels"], queryFn: async () => { const d = await api.get("/reels"); return Array.isArray(d) ? d : []; } });
 

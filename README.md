@@ -20,7 +20,8 @@ come straight from that bundle, not from eyeballing.
 | Settings (profile, light/dark/system, language, modules, notifications, sounds, sign out) | ✅ |
 | Address (warehouse picker, room number, copyable fields) | ✅ |
 | Wallet (balance, outstanding, transactions, cards, top-up sheet) | ✅ |
-| Loyalty, Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Loyalty (points card, active rewards, tiers, rewards with redeem sheet, history) | ✅ |
+| Calculator, Rates, My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

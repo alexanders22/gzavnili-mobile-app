@@ -73,6 +73,35 @@ const walletTx: { id: string; kind: "parcel" | "outgoing" | "topup"; status: str
   { id: "t4", kind: "parcel", status: "REJECTED", amount: 24, created_at: daysAgo(15) },
 ];
 
+const TIERS = [
+  { name: "Silver", emoji: "🥈", from: 0, rate: 5 },
+  { name: "Gold", emoji: "🥇", from: 1000, rate: 10 },
+  { name: "Platinum", emoji: "💎", from: 2500, rate: 15 },
+];
+const loyalty = {
+  points: 1240,
+  rewards: [
+    { id: "rw1", title_ka: "უფასო მიწოდება", title_en: "Free delivery", cost: 300, available: true },
+    { id: "rw2", title_ka: "−20% ფრახტზე", title_en: "−20% freight", cost: 800, available: true },
+    { id: "rw3", title_ka: "უფასო გადაფუთვა", title_en: "Free repacking", cost: 150, available: true },
+    { id: "rw4", title_ka: "პრიორიტეტული განბაჟება", title_en: "Priority customs", cost: 2000, available: false },
+  ],
+  active_rewards: [] as { id: string; title_ka: string; title_en: string; cost: number; available: boolean }[],
+  history: [
+    { id: "h1", label: "Welcome bonus", points: 100, created_at: daysAgo(40) },
+    { id: "h2", label: "Sony headphones · 3.2 kg", points: 32, created_at: daysAgo(10) },
+    { id: "h3", label: "Referral · Keti D.", points: 150, created_at: daysAgo(6) },
+    { id: "h4", label: "Redeemed · Free delivery", points: -300, created_at: daysAgo(3) },
+  ],
+};
+function loyaltyView() {
+  const tier = [...TIERS].reverse().find((t) => loyalty.points >= t.from) ?? TIERS[0];
+  const next = TIERS[TIERS.indexOf(tier) + 1] ?? null;
+  const to_next = next ? next.from - loyalty.points : 0;
+  const progress = next ? Math.round(((loyalty.points - tier.from) / (next.from - tier.from)) * 100) : 100;
+  return { points: loyalty.points, tier, next, to_next, progress, tiers: TIERS, rewards: loyalty.rewards, active_rewards: loyalty.active_rewards, history: loyalty.history };
+}
+
 function handle(method: string, path: string, body: any) {
   const p = path.split("?")[0];
   if (p.includes("/v1/auth/login")) return { access_token: "demo.token", refresh_token: "demo.token" };
@@ -96,7 +125,17 @@ function handle(method: string, path: string, body: any) {
     return { balance: customer.wallet_balance };
   }
   if (p.includes("/wallet")) return { balance: customer.wallet_balance, currency: "GEL", cards: walletCards, transactions: walletTx };
-  if (p.includes("/loyalty")) return { points: 1240, tier: { name: "Gold", emoji: "🥇" }, progress: 62, next_tier: "Platinum" };
+  if (p === "/loyalty/redeem" && method === "post") {
+    const r = loyalty.rewards.find((x) => x.id === body?.reward_id);
+    if (r && r.available && loyalty.points >= r.cost) {
+      loyalty.points -= r.cost;
+      loyalty.active_rewards = [...loyalty.active_rewards, r];
+      loyalty.history = [{ id: "h" + Date.now(), label: `Redeemed · ${r.title_en}`, points: -r.cost, created_at: new Date().toISOString() }, ...loyalty.history];
+      loyalty.rewards = loyalty.rewards.map((x) => ({ ...x, available: loyalty.points >= x.cost }));
+    }
+    return loyaltyView();
+  }
+  if (p.includes("/loyalty")) return loyaltyView();
   if (p.includes("/reels")) return method === "post" ? { ok: true } : reels;
   if (p.includes("/referral")) return { code: "GZ-DEMO-1001", invited: 3, credited: 1, bonus: 150 };
   if (p.includes("/shops/getShops")) return ["amazon.com", "ebay.com", "nike.com", "apple.com", "shein.com", "aliexpress.com", "zara.com", "asos.com"];

@@ -19,7 +19,7 @@ Route → module id (from module 9):
 
 | route | id | | route | id |
 |---|---|---|---|---|
-| (tabs)/_layout | 10 | | loyalty | 1168 |
+| (tabs)/_layout | 10 | | loyalty | 1168 ✅ |
 | (tabs)/add-tracking | 898 | | my-code | 1169 |
 | (tabs)/address | 910 ✅ | | pay/[id] | 1171 |
 | (tabs)/index (home) | 1030 ✅ | | profile | 1172 |
