@@ -5,9 +5,13 @@ import { clearToken, setToken } from "./token";
 
 export const USA_BRANCH_ID = "1ad52c30-2978-4fe0-9db4-ecbba1e04365";
 
+export type Profile = {
+  first_name_en?: string; last_name_en?: string; first_name_ka?: string; last_name_ka?: string;
+  address_en?: string; address_ka?: string; city_en?: string; city_ka?: string; phone?: string;
+};
 export type Customer = {
-  id: string; first_name?: string; last_name?: string; room_number?: string; profile_complete?: boolean; wallet_balance?: number;
-  profile?: { first_name_ka?: string; first_name_en?: string; last_name_ka?: string; last_name_en?: string };
+  id: string; first_name?: string; last_name?: string; email?: string; phone?: string; room_number?: string; profile_complete?: boolean; wallet_balance?: number;
+  profile?: Profile;
 };
 export type WarehouseAddress = { id: string; street: string; city: string; state?: string; country: string; zipCode: string; tel?: string };
 export type LoyaltyTier = { name: string; emoji: string; from: number; rate: number };
@@ -174,3 +178,16 @@ export function useAssistantChat() {
 export type ReferralFriend = { id: string; name: string; state: "credited" | "pending"; points: number; joined_at: string; credited_at?: string | null };
 export type Referral = { code: string; link: string; bonus: number; earned: number; friends: ReferralFriend[] };
 export const useReferral = () => useQuery<Referral>({ queryKey: ["referral"], queryFn: () => api.get("/referral") });
+
+// Profile — PUT /customers/me replaces the customer in the cache; POST /ai/translate fills the other language.
+export function useUpdateProfile() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (p: Profile) => api.put<Customer>("/customers/me", p),
+    onSuccess: (c) => { qc.setQueryData(["customer"], c); qc.invalidateQueries({ queryKey: ["customerAddresses"] }); },
+  });
+}
+export type TranslateResult = { result: Record<string, { en?: string; ka?: string }>; source: "ai" | "offline" | "none" };
+export function useTranslateFields() {
+  return useMutation({ mutationFn: (items: Record<string, string>) => api.post<TranslateResult>("/ai/translate", { items }) });
+}

@@ -29,7 +29,7 @@ come straight from that bundle, not from eyeballing.
 | Referral (bonus card, invite code with copy/share, invited friends) | ✅ |
 | Buy For Me (request form, how it works, demo requests) | ✅ |
 | Guided tour overlay (TourOverlay / TourTarget that highlights and taps through screens) | not started |
-| Profile | placeholder |
+| Profile (bilingual EN/ქარ name, address, city, phone; AI fill of the other language, onboarding mode) | ✅ |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

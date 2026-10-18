@@ -9,8 +9,37 @@ const customer = {
   first_name: "Vasil", last_name: "Beridze", email: "vasil@example.com", phone: "+995 555 11 22 33",
   room_number: "GZ-1166", customerType: "PERSONAL", verified: true, repackaging: true,
   profile_complete: true, wallet_balance: 42.5,
-  profile: { first_name_ka: "ვასილ", first_name_en: "Vasil", last_name_ka: "ბერიძე", last_name_en: "Beridze" },
+  profile: {
+    first_name_ka: "ვასილ", first_name_en: "Vasil", last_name_ka: "ბერიძე", last_name_en: "Beridze",
+    address_en: "12 Rustaveli Ave, apt. 5", address_ka: "", city_en: "Tbilisi", city_ka: "თბილისი", phone: "+995 555 11 22 33",
+  },
 };
+
+// Offline stand-in for the AI translator: a letter-by-letter transliteration Latin ↔ Georgian.
+const KA_OF: Record<string, string> = { a: "ა", b: "ბ", g: "გ", d: "დ", e: "ე", v: "ვ", z: "ზ", t: "თ", i: "ი", k: "კ", l: "ლ", m: "მ", n: "ნ", o: "ო", p: "პ", r: "რ", s: "ს", u: "უ", f: "ფ", q: "ქ", y: "ყ", h: "ჰ", j: "ჯ", c: "ც", x: "ხ", w: "ვ" };
+const KA_DIGRAPH: Record<string, string> = { sh: "შ", ch: "ჩ", ts: "ც", dz: "ძ", kh: "ხ", gh: "ღ", zh: "ჟ", ph: "ფ", th: "თ" };
+const EN_OF: Record<string, string> = { ა: "a", ბ: "b", გ: "g", დ: "d", ე: "e", ვ: "v", ზ: "z", თ: "t", ი: "i", კ: "k", ლ: "l", მ: "m", ნ: "n", ო: "o", პ: "p", ჟ: "zh", რ: "r", ს: "s", ტ: "t", უ: "u", ფ: "p", ქ: "k", ღ: "gh", ყ: "q", შ: "sh", ჩ: "ch", ც: "ts", ძ: "dz", წ: "ts", ჭ: "ch", ხ: "kh", ჯ: "j", ჰ: "h" };
+const KA_WORDS: Record<string, string> = { ave: "გამზ.", "ave,": "გამზ.,", avenue: "გამზირი", "st.": "ქ.", street: "ქუჩა", "apt.": "ბინა", apt: "ბინა", tbilisi: "თბილისი", batumi: "ბათუმი", kutaisi: "ქუთაისი", rustaveli: "რუსთაველის" };
+const EN_WORDS: Record<string, string> = { "გამზ.": "Ave", გამზირი: "Avenue", "ქ.": "St.", ქუჩა: "Street", ბინა: "apt.", თბილისი: "Tbilisi", ბათუმი: "Batumi", ქუთაისი: "Kutaisi", რუსთაველის: "Rustaveli", "პრ.": "Ave" };
+function toKa(text: string) {
+  return text.split(/\s+/).map((w) => {
+    const hit = KA_WORDS[w.toLowerCase()]; if (hit) return hit;
+    let out = ""; const s = w.toLowerCase();
+    for (let i = 0; i < s.length; i++) {
+      const two = s.slice(i, i + 2);
+      if (KA_DIGRAPH[two]) { out += KA_DIGRAPH[two]; i++; continue; }
+      out += KA_OF[s[i]] ?? w[i];
+    }
+    return out;
+  }).join(" ");
+}
+function toEn(text: string) {
+  return text.split(/\s+/).map((w) => {
+    const hit = EN_WORDS[w]; if (hit) return hit;
+    const out = Array.from(w).map((ch) => EN_OF[ch] ?? ch).join("");
+    return out ? out[0].toUpperCase() + out.slice(1) : out;
+  }).join(" ");
+}
 
 const BUTTONS = {
   declaration_enable: false, custom_enable: false, custom_right_icon_enable: false, custom_right_double_icon_enable: false,
@@ -176,6 +205,24 @@ function handle(method: string, path: string, body: any) {
   }
   if (p.includes("/v1/auth/login")) return { access_token: "demo.token", refresh_token: "demo.token" };
   if (p.includes("/customers/search/userId")) return customer;
+  if (p === "/customers/me" && method === "put") {
+    const prof = { ...(customer.profile ?? {}), ...(body ?? {}) } as typeof customer.profile & { phone?: string };
+    Object.assign(customer, {
+      profile: prof,
+      first_name: prof.first_name_en || customer.first_name, last_name: prof.last_name_en || customer.last_name,
+      phone: prof.phone || customer.phone, profile_complete: true,
+    });
+    return customer;
+  }
+  if (p === "/ai/translate" && method === "post") {
+    const items: Record<string, string> = body?.items ?? {};
+    const result: Record<string, { en: string; ka: string }> = {};
+    for (const [k, v] of Object.entries(items)) {
+      const isKa = /[\u10A0-\u10FF]/.test(v);
+      result[k] = isKa ? { ka: v, en: toEn(v) } : { en: v, ka: toKa(v) };
+    }
+    return { result, source: "offline" };
+  }
   if (p.includes("/addresses") && !p.includes("customer-addresses")) return warehouses;
   if (p.includes("/orders/statusQuantity")) {
     const q: Record<string, number> = {};
