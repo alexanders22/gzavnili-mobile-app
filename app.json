@@ -32,7 +32,8 @@
     ],
     "scheme": "gzavnili",
     "experiments": {
-      "typedRoutes": false
+      "typedRoutes": false,
+      "baseUrl": "/mobileapps"
     }
   }
 }
