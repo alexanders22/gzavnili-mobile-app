@@ -156,6 +156,18 @@ function handle(method: string, path: string, body: any) {
     const tracking = carrier === "UPS" ? `1Z999AA1${digits()}` : carrier === "USPS" ? `9400111206${digits()}` : `${digits()}${digits().slice(0, 2)}`;
     return { carrier, tracking_number: tracking, name: names[Math.floor(Math.random() * names.length)], origin: Math.random() < 0.8 ? "usa" : "china" };
   }
+  if (p === "/assistant/chat" && method === "post") {
+    const q = String(body?.message ?? "").toLowerCase();
+    const ka = body?.lang === "ka";
+    const inTransit = orders.filter((o) => ["RECEIVED", "ON_THE_WAY_FROM_US_WAREHOUSE"].includes(o.group)).length;
+    const arrived = orders.filter((o) => o.group === "RECEIVED_IN_TBILISI_WAREHOUSE").length;
+    const due = orders.filter((o) => !o.payed && o.group === "RECEIVED_IN_TBILISI_WAREHOUSE").reduce((s, o) => s + Number(o.price ?? 0), 0);
+    if (/where|სად|parcel|ამანათ/.test(q)) return { reply: ka ? `გზაშია ${inTransit} ამანათი, თბილისში ჩამოვიდა ${arrived}. დეტალები „ამანათებში“.` : `${inTransit} parcel(s) are on the way and ${arrived} arrived in Tbilisi. Details are under Parcels.`, tools: ["list_parcels"], guide: null };
+    if (/owe|pay|გადა/.test(q)) return { reply: ka ? `გადასახდელია ₾${due.toFixed(2)}. შემიძლია გაჩვენო, როგორ გადაიხადო.` : `You owe ₾${due.toFixed(2)} for parcels in Tbilisi. I can show you how to pay.`, tools: ["amount_due"], guide: "pay" };
+    if (/address|მისამართ/.test(q)) return { reply: ka ? "შენი აშშ მისამართი: 3007 Rosemont Avenue, UNIT GZ-1166, Wilmington, Delaware 19802." : "Your US address: 3007 Rosemont Avenue, UNIT GZ-1166, Wilmington, Delaware 19802.", tools: ["warehouse_address"], guide: null };
+    if (/declar|დეკლარ/.test(q)) return { reply: ka ? "დეკლარაციისთვის საჭიროა მაღაზია, კატეგორია და ფასი. გაჩვენო?" : "To declare you pick the store, a category and the price. Want me to show you?", tools: [], guide: "declare" };
+    return { reply: ka ? "ეს სადემონსტრაციო ასისტენტია. შემიძლია ვუპასუხო ამანათების, თანხის, მისამართისა და დეკლარაციის კითხვებს." : "This is the demo assistant. I can answer about your parcels, what you owe, your address and declarations.", tools: [], guide: null };
+  }
   if (p === "/calculator/meta") return { origins: CALC.origins, countries: CALC.countries, max_weight: CALC.max_weight, fx: CALC.fx, fees: CALC.fees };
   if (p === "/calculator" && method === "post") {
     const q = calculatorQuote(body ?? {});

@@ -30,7 +30,7 @@ Route → module id (from module 9):
 | _layout | 1073 ✅ | | sign-in | 1184 ✅ |
 | add-incoming | 1130 | | wallet | 1185 ✅ |
 | add-outgoing | 1131 | | | |
-| assistant | 1139 | | **shared** | |
+| assistant | 1139 ✅ | | **shared** | |
 | buyforme | 1158 | | ui kit (Screen/Body/Card/Btn…) | 890 ✅ |
 | calculator | 1159 ✅ | | header + bottom nav | 894 ✅ |
 | customs/[id] | 1160 | | theme tokens | 895 ✅ |
@@ -42,6 +42,7 @@ Route → module id (from module 9):
 | | | | ParcelProgress / STATUS_GROUPS / ProfileGateCard | 1070 / 1067 / 1033 ✅ |
 | | | | ModuleTile + NewBadge / shop catalog | 909 / 1032 ✅ |
 | | | | Barcode (Code 128) | 1170 ✅ |
+| | | | playSound / TOURS data / TourOverlay+useTour | 1140 ✅ / 1069 ✅ / 1068 (store only) |
 | | | | hand-drawn icon wrapper / stroke map | 15 / 275 ✅ |
 | | | | demo adapter | 1024 ✅ |
 

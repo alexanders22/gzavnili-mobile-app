@@ -157,3 +157,15 @@ export type DemoTracking = { carrier: string; tracking_number: string; name: str
 export function useDemoTracking() {
   return useMutation({ mutationFn: async (carrier?: string) => (await api.get("/tracking/demo", carrier ? { params: { carrier } } : undefined)) as DemoTracking });
 }
+
+/* ---------------- assistant ---------------- */
+export type ChatMessage = { from: "me" | "ai"; text: string; tools?: string[]; guide?: string; error?: boolean };
+export type ChatReply = { reply: string; tools?: string[]; guide?: string | null };
+export function useAssistantChat() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (body: { message: string; history: ChatMessage[]; lang: string }) =>
+      (await api.post("/assistant/chat", { ...body, history: body.history.filter((m) => !m.error) }, { timeout: 60_000 })) as ChatReply,
+    onSuccess: (r) => { if (r.tools?.includes("add_incoming_parcel")) { qc.invalidateQueries({ queryKey: ["orders"] }); qc.invalidateQueries({ queryKey: ["statusQuantity"] }); } },
+  });
+}

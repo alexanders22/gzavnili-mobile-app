@@ -25,7 +25,9 @@ come straight from that bundle, not from eyeballing.
 | Rates (hero banner with plane, per-kg route cards, perks) | ✅ |
 | My code (room-number barcode card, simulated label scanner) | ✅ |
 | Reels (full-screen stories with auto-advance, tap zones, video/image, CTA) | ✅ |
-| Assistant, Referral, Buy for me, Profile | placeholders |
+| Assistant (chat with bird fly-in, suggestions, typing dots, "How it works" tour menu) | ✅ |
+| Guided tour overlay (TourOverlay / TourTarget that highlights and taps through screens) | not started |
+| Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run
