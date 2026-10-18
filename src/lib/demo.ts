@@ -207,7 +207,13 @@ function handle(method: string, path: string, body: any) {
   }
   if (p.includes("/loyalty")) return loyaltyView();
   if (p.includes("/reels")) return method === "post" ? { ok: true } : reels;
-  if (p.includes("/referral")) return { code: "GZ-DEMO-1001", invited: 3, credited: 1, bonus: 150 };
+  if (p.includes("/referral")) return {
+    code: "GZ-DEMO-1001", link: "https://openbanking.brandrepublic.ge/mobileapps/sign-in?ref=GZ-DEMO-1001", bonus: 150, earned: 150,
+    friends: [
+      { id: "f1", name: "Keti Dolidze", state: "credited", points: 150, joined_at: daysAgo(20), credited_at: daysAgo(6) },
+      { id: "f2", name: "Luka Beridze", state: "pending", points: 150, joined_at: daysAgo(3), credited_at: null },
+    ],
+  };
   if (p.includes("/shops/getShops")) return ["amazon.com", "ebay.com", "nike.com", "apple.com", "shein.com", "aliexpress.com", "zara.com", "asos.com"];
   return Array.isArray(body) ? [] : {};
 }

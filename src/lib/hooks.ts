@@ -169,3 +169,8 @@ export function useAssistantChat() {
     onSuccess: (r) => { if (r.tools?.includes("add_incoming_parcel")) { qc.invalidateQueries({ queryKey: ["orders"] }); qc.invalidateQueries({ queryKey: ["statusQuantity"] }); } },
   });
 }
+
+/* ---------------- referral ---------------- */
+export type ReferralFriend = { id: string; name: string; state: "credited" | "pending"; points: number; joined_at: string; credited_at?: string | null };
+export type Referral = { code: string; link: string; bonus: number; earned: number; friends: ReferralFriend[] };
+export const useReferral = () => useQuery<Referral>({ queryKey: ["referral"], queryFn: () => api.get("/referral") });
