@@ -79,6 +79,34 @@ const warehouses = [
   { id: "w2", street: "Room 1203, Bldg 7, Huaqiang North", city: "Shenzhen", state: "", country: "China", zipCode: "518000", tel: "+86 755 1234 5678" },
 ];
 
+const customerAddresses = [
+  { id: "a1", address: "Rustaveli Avenue 12", title: "Home", tag: "home", city: "Tbilisi", additionalInstructions: "Second floor", isDefault: true, lat: "44.799", lang: "41.715" },
+  { id: "a2", address: "Chavchavadze Avenue 37", title: "Office", tag: "work", city: "Tbilisi", additionalInstructions: "Reception", isDefault: false, lat: "44.745", lang: "41.709" },
+];
+const hours = (open: string, close: string, days: string[]) =>
+  ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].map((day) => ({ day, is_active: days.includes(day), opens_at: days.includes(day) ? open : null, closes_at: days.includes(day) ? close : null }));
+const WEEK = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+const pickupLocations = [
+  { id: "pl1", alias: "Saburtalo office", alias_ka: "საბურთალოს ოფისი", address: "Vazha-Pshavela Ave 71, Tbilisi", address_ka: "ვაჟა-ფშაველას გამზ. 71, თბილისი", phone: "+995 32 2 11 22 33", latitude: 41.7245, longitude: 44.7405, is_default: true, additional_info: "Entrance from the courtyard, 1st floor", working_hours: hours("10:00", "20:00", [...WEEK, "saturday"]) },
+  { id: "pl2", alias: "Gldani office", alias_ka: "გლდანის ოფისი", address: "Khizanishvili St 28, Tbilisi", address_ka: "ხიზანიშვილის ქ. 28, თბილისი", phone: "+995 32 2 44 55 66", latitude: 41.7935, longitude: 44.8125, is_default: false, additional_info: null, working_hours: hours("10:00", "19:00", WEEK) },
+];
+const recipients = [
+  { id: "rc1", first_name: "Emily", last_name: "Miller", name_en: "Emily Miller", name_ka: "ემილი მილერი", phone: "+16465550123", new_profile: false },
+  { id: "rc2", first_name: "Lukas", last_name: "Schmidt", name_en: "Lukas Schmidt", name_ka: "ლუკას შმიდტი", phone: "+4915212345678", new_profile: false },
+  { id: "rc3", first_name: "Nino", last_name: "Beridze", name_en: "Nino Beridze", name_ka: "ნინო ბერიძე", phone: "+995555123456", new_profile: false },
+];
+const CATEGORIES: [string, string][] = [
+  ["Clothing", "ტანსაცმელი"], ["Shoes", "ფეხსაცმელი"], ["Phone", "ტელეფონი"], ["Computer / laptop", "კომპიუტერი / ლეპტოპი"], ["Audio/video equipment", "აუდიო/ვიდეო ტექნიკა"],
+  ["Households", "საყოფაცხოვრებო"], ["Cosmetics", "კოსმეტიკა"], ["Toys", "სათამაშოები"], ["Books", "წიგნები"], ["Sports goods", "სპორტული საქონელი"],
+  ["Jewelry / watches", "სამკაული / საათები"], ["Car parts", "ავტონაწილები"], ["Food supplements", "საკვები დანამატები"], ["Other", "სხვა"],
+];
+let nextId = 100;
+const tbilisiSlots = () => {
+  const now = new Date(); const h = now.getUTCHours() + 4;
+  const all = ["12:00-15:00", "15:00-19:00", "19:00-22:00"];
+  return { today: all.filter((s) => Number(s.slice(0, 2)) > h + 1), tomorrow: all };
+};
+
 const reels = [
   { id: "r1", tone: "green", tagKa: "აქცია", tagEn: "DEAL", titleKa: "−20% პირველ ამანათზე", titleEn: "−20% on your first parcel", bodyKa: "დაამატე თრექინგი ამ კვირაში და ფასდაკლება ავტომატურად ჩაითვლება.", bodyEn: "Add a tracking number this week and the discount applies automatically.", emoji: "🎉", media_type: null, media_url: null, cta_route: "/add-incoming", seen: false },
   { id: "r2", tone: "blue", tagKa: "სიახლე", tagEn: "NEW", titleKa: "ჩინეთიდან საჰაერო გზით", titleEn: "Air shipping from China", bodyKa: "10–14 დღე, $5/კგ. საზღვაო გზა კვლავ $3/კგ.", bodyEn: "10–14 days at $5/kg. Sea freight stays at $3/kg.", emoji: "✈️", media_type: null, media_url: null, cta_route: "/rates", seen: false },
@@ -224,6 +252,105 @@ function handle(method: string, path: string, body: any) {
     return { result, source: "offline" };
   }
   if (p.includes("/addresses") && !p.includes("customer-addresses")) return warehouses;
+  if (p === "/customer-addresses" && method === "post") {
+    const a = { id: "a" + nextId++, address: String(body?.address ?? ""), title: String(body?.title ?? "Address"), tag: "other", city: String(body?.city ?? "Tbilisi"), additionalInstructions: "", isDefault: false, lat: String(body?.lng ?? ""), lang: String(body?.lat ?? "") };
+    customerAddresses.push(a);
+    return a;
+  }
+  if (p.includes("/customer-addresses")) return customerAddresses;
+  if (p.includes("/content-management")) return CATEGORIES.map(([en, ka], i) => ({ identifier: `Category_${i + 1}`, nameEn: en, nameKa: ka, page: "declaration" }));
+  if (p.includes("/pickup-locations")) return pickupLocations;
+  if (p === "/recipients") return recipients;
+  if (p.includes("/district/timeSlots")) return tbilisiSlots();
+  if (p.includes("/district/find")) return "Tbilisi";
+  if (p.includes("/payments/cards")) return walletCards;
+  if (p.includes("/signify/template/")) return { url: "about:blank#demo-signature" };
+  if (p === "/outgoing/countries") return { countries: CALC.countries, base_fee: CALC.outBase, pickup_fee: CALC.fees.pickup };
+  if (p === "/outgoing" && method === "post") {
+    const c = CALC.countries.find((x) => x.code === body?.country) ?? CALC.countries[0];
+    const weight = Number(body?.weight ?? 0);
+    const price = weight * c.perKg + CALC.outBase + (body?.pickup ? CALC.fees.pickup : 0);
+    const people = (body?.recipients ?? []).map((r: any, i: number) => {
+      const name = `${r.first_name} ${r.last_name}`.trim();
+      const phone = `${r.dial}${r.phone}`;
+      const existing = recipients.find((x) => x.phone === phone);
+      if (!existing) recipients.push({ id: "rc" + nextId, first_name: r.first_name, last_name: r.last_name, name_en: name, name_ka: name, phone, new_profile: false });
+      return { id: "rp" + nextId++ + i, first_name: r.first_name, last_name: r.last_name, name_en: name, name_ka: name, phone, new_profile: !existing };
+    });
+    const out = {
+      id: "x" + nextId++, status: "CREATED", tracking_number: `GZ-OUT-${String(Math.floor(100000 + Math.random() * 900000))}`, weight: weight.toFixed(2), price: price.toFixed(2),
+      destination: c.name, destination_country: { code: c.code, flag: c.flag, name: c.name, nameKa: c.nameKa }, recipient_name: body?.recipient_name, recipient_address: body?.recipient_address,
+      recipient_phone: body?.recipient_phone, contents: body?.contents, pickup: !!body?.pickup, pickup_address: body?.pickup_address, recipients: people, created_at: new Date().toISOString(),
+    };
+    outgoing.unshift(out as any);
+    walletTx.unshift({ id: "t" + nextId++, kind: "outgoing", status: "PENDING", amount: price, created_at: new Date().toISOString() });
+    return out;
+  }
+  if (p.includes("/orders/getByNusxa/")) {
+    const o = orders.find((x) => x.id === p.split("/orders/getByNusxa/")[1]);
+    return orders.filter((x) => x.nusxa === o?.nusxa).map(withButtons);
+  }
+  if (p.includes("/orders/getOrderPrices")) {
+    const picked = orders.filter((o) => (body?.orders ?? []).includes(o.id));
+    const freight = picked.reduce((s, o) => s + 24 * Number(o.weight ?? 1), 0);
+    const customs = picked.reduce((s, o) => s + Number(o.custom_fee?.custom_fee_amount ?? 0), 0);
+    const delivery = body?.office_pickup ? 0 : CALC.fees.delivery;
+    const t = { totalWeightCost: round2(freight), repackagingCost: 5, insuranceCost: 2, delivery_fee: delivery, service_fee: 3, customFee: round2(customs), discountAmount: 0, totalPrice: round2(freight + 5 + 2 + delivery + 3 + customs) };
+    return [picked.map((o) => ({ orderId: o.id, ...t })), [t]];
+  }
+  if (p.includes("/orders/order_payment_status/")) return { payStatus: "COMPLETED" };
+  if (p.includes("/orders/nusxa_update/")) {
+    const o = orders.find((x) => x.id === p.split("/orders/nusxa_update/")[1]);
+    for (const x of orders) if (x.nusxa === o?.nusxa) { x.custom_status = String(body?.custom_status); if (body?.DeclarationPaymentAuto !== undefined) x.DeclarationPaymentAuto = body.DeclarationPaymentAuto; }
+    return { ok: true };
+  }
+  if (p.includes("/orders/wrapping-update/")) { const o = orders.find((x) => x.id === p.split("/orders/wrapping-update/")[1]); if (o) o.wrapping = body?.wrapping; return { ok: true }; }
+  if (p.includes("/orders/time-slot-update/")) {
+    const o = orders.find((x) => x.id === p.split("/orders/time-slot-update/")[1]);
+    if (o) { o.timeSlot = body?.timeSlot; o.delivery_day = body?.day; }
+    return { ok: true };
+  }
+  if (p.includes("/orders/courier/")) {
+    const o = orders.find((x) => x.id === p.split("/orders/courier/")[1]);
+    if (o) { o.courier_delivery = !!body?.courier; o.delivery_method = body?.courier ? "courier" : "pickup"; o.pickup_location = body?.courier ? null : pickupLocations.find((l) => l.id === body?.pickup_location_id) ?? pickupLocations[0]; }
+    return { ok: true };
+  }
+  if (p.includes("/orders/pickup-location-update/")) {
+    const o = orders.find((x) => x.id === p.split("/orders/pickup-location-update/")[1]);
+    if (o) o.pickup_location = pickupLocations.find((l) => l.id === body?.pickup_location_id) ?? o.pickup_location;
+    return { ok: true };
+  }
+  if (p === "/orders" && method === "post") {
+    if (orders.some((o) => o.tracking_number === body?.tracking_number)) throw Object.assign(new Error("duplicate"), { response: { status: 409, data: { message: "duplicate key value" } } });
+    const o = {
+      id: "o" + nextId++, name: body?.name || `Order ${orders.length + 1}`, tracking_number: body?.tracking_number, status: "AWAITING", group: "AWAITING", weight: null, price: null,
+      declaration_status: null, custom_status: "0", NeedsCustom: false, payed: false, wrapping: true, timeSlot: null, nusxa: `NX-${nextId}`, branch: { name: body?.country === "china" ? "China" : "USA" },
+      courier_delivery: body?.courier !== false, delivery_method: body?.courier === false ? "pickup" : "courier", declaration: [], orderHistory: [{ status: "AWAITING", name: "AWAITING", date: new Date().toISOString() }],
+    };
+    orders.unshift(o);
+    return o;
+  }
+  if (p.startsWith("/orders/") && method === "put") { const o = orders.find((x) => x.id === p.split("/orders/")[1]); if (o) Object.assign(o, body); return o ?? { ok: true }; }
+  if (p === "/declarations" && method === "post") {
+    const o = orders.find((x) => x.id === body?.order_id);
+    const d = { id: "d" + nextId++, ...body };
+    o?.declaration.push(d);
+    return d;
+  }
+  if (p.startsWith("/declarations/") && method === "delete") { const id = p.split("/declarations/")[1]; for (const o of orders) o.declaration = o.declaration.filter((d: any) => d.id !== id); return { ok: true }; }
+  if (p.startsWith("/declarations/") && method === "put") return { ok: true };
+  if (p === "/transactions" && method === "post") {
+    for (const id of body?.order_ids ?? []) {
+      const o = orders.find((x) => x.id === id);
+      if (!o) continue;
+      o.payed = true;
+      if (body?.pickup_location_id) { o.delivery_method = "pickup"; o.courier_delivery = false; o.pickup_location = pickupLocations.find((l) => l.id === body.pickup_location_id) ?? pickupLocations[0]; o.pickup_status = "OFFICE PICKED UP"; }
+      else { o.delivery_method = "courier"; o.courier_delivery = true; o.delivery_paid = true; }
+    }
+    const total = (body?.order_ids ?? []).reduce((s: number, id: string) => { const o = orders.find((x) => x.id === id); return s + 24 * Number(o?.weight ?? 1) + 10 + Number(o?.custom_fee?.custom_fee_amount ?? 0); }, 0);
+    walletTx.unshift({ id: "t" + nextId++, kind: "parcel", status: "COMPLETED", amount: round2(total), created_at: new Date().toISOString() });
+    return { orderId: "DEMO-ORDER", status: "PENDING" };
+  }
   if (p.includes("/orders/statusQuantity")) {
     const q: Record<string, number> = {};
     for (const o of orders) q[o.group] = (q[o.group] ?? 0) + 1;
@@ -246,7 +373,7 @@ function handle(method: string, path: string, body: any) {
     const r = loyalty.rewards.find((x) => x.id === body?.reward_id);
     if (r && r.available && loyalty.points >= r.cost) {
       loyalty.points -= r.cost;
-      loyalty.active_rewards = [...loyalty.active_rewards, r];
+      if (!loyalty.active_rewards.some((x) => x.id === r.id)) loyalty.active_rewards = [...loyalty.active_rewards, r];
       loyalty.history = [{ id: "h" + Date.now(), label: `Redeemed · ${r.title_en}`, points: -r.cost, created_at: new Date().toISOString() }, ...loyalty.history];
       loyalty.rewards = loyalty.rewards.map((x) => ({ ...x, available: loyalty.points >= x.cost }));
     }

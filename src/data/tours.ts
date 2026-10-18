@@ -1,5 +1,5 @@
-// Guided tours the assistant can play (ported from the original app). The overlay that
-// highlights targets is not rebuilt yet; the list already drives the assistant's menu.
+// Guided tours the assistant can play (ported from the original app); TourOverlay in
+// src/components/Tour.tsx walks through the steps.
 export type TourStep = { route?: string; target: string; press?: boolean; optional?: boolean; say: { en: string; ka: string }; fallback?: { en: string; ka: string } };
 export type Tour = { id: string; icon: string; title: { en: string; ka: string }; blurb: { en: string; ka: string }; steps: TourStep[] };
 

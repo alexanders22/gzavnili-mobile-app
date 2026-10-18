@@ -28,9 +28,15 @@ come straight from that bundle, not from eyeballing.
 | Assistant (chat with bird fly-in, suggestions, typing dots, "How it works" tour menu) | ✅ |
 | Referral (bonus card, invite code with copy/share, invited friends) | ✅ |
 | Buy For Me (request form, how it works, demo requests) | ✅ |
-| Guided tour overlay (TourOverlay / TourTarget that highlights and taps through screens) | not started |
+| Guided tour overlay (TourOverlay / TourTarget: dims the screen, highlights the step target, taps for you, 6 tours from the assistant) | ✅ |
 | Profile (bilingual EN/ქარ name, address, city, phone; AI fill of the other language, onboarding mode) | ✅ |
-| Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
+| Add tracking tab (FROM/TO swap card, start incoming or outgoing) | ✅ |
+| Add incoming parcel (origin, tracking + scan/demo code, name, courier vs branch, address chips, done card) | ✅ |
+| Send a parcel abroad (destination, recipient + phone + contacts, extra recipients, pickup address on a map, weight, quote, done) | ✅ |
+| Declare (store sheet, products with category + price, insurance/repacking toggles, rename) | ✅ |
+| Customs (4-step flow: who pays, in progress, prepared, sign, cleared; parcels in the batch) | ✅ |
+| Delivery (courier: address, today/tomorrow slots, options; office: pickup picker; booked and pickup-progress states) | ✅ |
+| Pay (courier/office, address or office, parcels in the payment, card, cost breakdown, processing/done/failed) | ✅ |
 
 ## Run
 

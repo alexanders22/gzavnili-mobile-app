@@ -8,6 +8,7 @@ import { useSettings } from "@/lib/settings";
 import { useIsDesktop } from "@/lib/layout";
 import { useCalculatorMeta, useCalculatorQuote, type CalcCountry, type CalcOrigin } from "@/lib/hooks";
 import { Body, Btn, Card, Pill, Screen, SectionLabel, Title, ToggleRow, styles, useTokens } from "@/ui";
+import { TourTarget } from "@/lib/tour";
 import { KraftBox } from "@/components/KraftBox";
 
 // Fallbacks until /calculator/meta answers (same values the backend ships).
@@ -81,6 +82,7 @@ export default function Calculator() {
 
   const form = (
     <>
+      <TourTarget id="calc.dir">
       <View style={{ flexDirection: "row", gap: space.sm, backgroundColor: theme.paper, padding: 4, borderRadius: radius.pill }}>
         {([{ id: "in" as const, icon: "cube-outline" as const, label: ka ? "მიღება" : "Receive" }, { id: "out" as const, icon: "paper-plane-outline" as const, label: ka ? "გაგზავნა" : "Send" }]).map((d) => {
           const on = direction === d.id;
@@ -92,7 +94,9 @@ export default function Calculator() {
           );
         })}
       </View>
+      </TourTarget>
 
+      <TourTarget id="calc.route">
       <Card style={{ marginTop: space.lg }}>
         <View style={[styles.row, { gap: space.md }]}>
           {direction === "in" ? <Endpoint flag={from.flag} caption={ka ? "საიდან" : "From"} name={ka ? from.nameKa : from.name} align="left" /> : <Endpoint flag="🇬🇪" caption={ka ? "საიდან" : "From"} name={ka ? "თბილისი" : "Tbilisi"} align="left" />}
@@ -110,6 +114,7 @@ export default function Calculator() {
             : countries.map((c) => <Chip key={c.code} on={c.code === country} label={`${c.flag} ${ka ? c.nameKa : c.name}`} onPress={() => setCountry(c.code)} />)}
         </View>
       </Card>
+      </TourTarget>
 
       <SectionLabel>{ka ? "წონა" : "Weight"}</SectionLabel>
       <Card>
@@ -125,7 +130,7 @@ export default function Calculator() {
           <RoundBtn icon="add" onPress={() => setW(weight + 0.5)} disabled={weight >= maxWeight} />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: space.lg, marginHorizontal: -space.lg }} contentContainerStyle={{ flexGrow: 1, justifyContent: "center", gap: space.sm, paddingHorizontal: space.lg }}>
-          {WEIGHT_PRESETS.map((w) => <Chip key={w} on={weight === w} label={`${w} kg`} onPress={() => setW(w)} />)}
+          {WEIGHT_PRESETS.map((w) => <TourTarget key={w} id={`calc.weight.${w}`} onPress={() => setW(w)}><Chip on={weight === w} label={`${w} kg`} onPress={() => setW(w)} /></TourTarget>)}
         </ScrollView>
       </Card>
 
@@ -147,6 +152,7 @@ export default function Calculator() {
       ) : null}
 
       <SectionLabel>{ka ? "მიწოდება" : "Delivery"}</SectionLabel>
+      <TourTarget id="calc.delivery">
       <Card style={{ paddingVertical: space.xs }}>
         {direction === "in" ? (
           <>
@@ -157,11 +163,13 @@ export default function Calculator() {
           <ToggleRow icon="bicycle-outline" title={ka ? "კურიერის გამოძახება" : "Courier pickup"} subtitle={ka ? `+₾${fees.pickup} · სხვაგვარად ჩააბარე ფილიალში` : `+₾${fees.pickup} · or drop it at a branch`} value={courier} onValueChange={setCourier} />
         )}
       </Card>
+      </TourTarget>
     </>
   );
 
   const total = (
     <>
+      <TourTarget id="calc.total">
       <Card style={{ backgroundColor: theme.navy, borderColor: theme.navy, padding: space.xl }}>
         <View style={styles.between}>
           <Body size={font.s11} weight="700" style={{ color: theme.green, letterSpacing: 0.6 }}>{(ka ? "სავარაუდო ფასი" : "Estimated total").toUpperCase()}</Body>
@@ -187,6 +195,7 @@ export default function Calculator() {
           <Body style={{ color: theme.faint, marginTop: space.md }}>{isError ? (ka ? "ფასი ვერ გამოითვლა — შეამოწმე წონა" : "Couldn't price this — check the weight") : ka ? "ითვლება…" : "Calculating…"}</Body>
         )}
       </Card>
+      </TourTarget>
       <Body muted size={font.s11} style={{ marginTop: space.sm, textAlign: "center" }}>
         {direction === "in" ? (ka ? "საბოლოო ფასი — საწყობში აწონვის შემდეგ" : "Final price follows the weight measured at the warehouse") : ka ? "ფასი ფიქსირდება გაგზავნის შექმნისას" : "The price is fixed when you create the shipment"}
       </Body>

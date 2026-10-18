@@ -15,6 +15,7 @@ import { FONT_ASSETS } from "@/lib/fonts";
 import { getToken } from "@/lib/token";
 import { AssistantFab } from "@/components/AssistantFab";
 import { LaunchSplash } from "@/components/LaunchSplash";
+import { TourOverlay } from "@/components/Tour";
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 30_000 } } });
 
@@ -40,6 +41,7 @@ export default function RootLayout() {
             <View style={{ flex: 1 }}>
               <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: theme.cream }, animation: "slide_from_right" }} />
               <AssistantFab />
+              <TourOverlay />
             </View>
           </SafeAreaProvider>
         </QueryClientProvider>

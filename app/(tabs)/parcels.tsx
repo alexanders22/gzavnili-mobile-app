@@ -12,6 +12,7 @@ import { Drawing } from "@/components/Drawing";
 import { KraftBox } from "@/components/KraftBox";
 import { OUT_STAGES, ParcelProgress } from "@/components/ParcelProgress";
 import { ProfileGateCard } from "@/components/ProfileGateCard";
+import { TourTarget } from "@/lib/tour";
 
 export const STATUS_GROUPS = ["AWAITING", "RECEIVED", "ON_THE_WAY_FROM_US_WAREHOUSE", "RECEIVED_IN_TBILISI_WAREHOUSE", "DELIVERED"] as const;
 type StatusGroup = (typeof STATUS_GROUPS)[number];
@@ -44,14 +45,18 @@ export default function Parcels() {
         <View style={styles.between}>
           <Title>{t("myParcels")}</Title>
           <View style={[styles.row, { gap: space.sm }]}>
-            <Pressable onPress={openCalculator} accessibilityLabel={ka ? "კალკულატორი" : "Price calculator"} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.card, borderWidth: 1, borderColor: theme.line, borderRadius: radius.pill, paddingHorizontal: 12, paddingVertical: 8, opacity: pressed ? 0.7 : 1 })}>
-              <Ionicons name="calculator-outline" size={15} color={theme.ink} />
-              <Body size={font.s12} weight="700">{ka ? "ფასი" : "Price"}</Body>
-            </Pressable>
-            <Pressable onPress={openAdd} style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.green, borderRadius: radius.pill, paddingHorizontal: 14, paddingVertical: 9 }}>
-              <Ionicons name="add" size={15} color={theme.greenDeep} />
-              <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{direction === "in" ? (ka ? "თრექინგი" : "Add tracking") : ka ? "გაგზავნა" : "Send parcel"}</Body>
-            </Pressable>
+            <TourTarget id="parcels.price" onPress={openCalculator}>
+              <Pressable onPress={openCalculator} accessibilityLabel={ka ? "კალკულატორი" : "Price calculator"} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.card, borderWidth: 1, borderColor: theme.line, borderRadius: radius.pill, paddingHorizontal: 12, paddingVertical: 8, opacity: pressed ? 0.7 : 1 })}>
+                <Ionicons name="calculator-outline" size={15} color={theme.ink} />
+                <Body size={font.s12} weight="700">{ka ? "ფასი" : "Price"}</Body>
+              </Pressable>
+            </TourTarget>
+            <TourTarget id="parcels.add" onPress={openAdd}>
+              <Pressable onPress={openAdd} style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.green, borderRadius: radius.pill, paddingHorizontal: 14, paddingVertical: 9 }}>
+                <Ionicons name="add" size={15} color={theme.greenDeep} />
+                <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{direction === "in" ? (ka ? "თრექინგი" : "Add tracking") : ka ? "გაგზავნა" : "Send parcel"}</Body>
+              </Pressable>
+            </TourTarget>
           </View>
         </View>
 
@@ -60,10 +65,12 @@ export default function Parcels() {
           {directions.map((d) => {
             const on = direction === d.id;
             return (
-              <Pressable key={d.id} onPress={() => setDirection(d.id)} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, paddingVertical: 11, borderRadius: radius.md, backgroundColor: on ? theme.navy : theme.card, borderWidth: 1, borderColor: on ? theme.navy : theme.line }}>
-                <Ionicons name={d.icon} size={15} color={on ? theme.green : theme.mut} />
-                <Body size={font.s13} weight="700" style={{ color: on ? "#fff" : theme.mut }}>{d.label}</Body>
-              </Pressable>
+              <TourTarget key={d.id} id={`parcels.dir.${d.id}`} onPress={() => setDirection(d.id)} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0 }}>
+                <Pressable onPress={() => setDirection(d.id)} style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, paddingVertical: 11, borderRadius: radius.md, backgroundColor: on ? theme.navy : theme.card, borderWidth: 1, borderColor: on ? theme.navy : theme.line }}>
+                  <Ionicons name={d.icon} size={15} color={on ? theme.green : theme.mut} />
+                  <Body size={font.s13} weight="700" style={{ color: on ? "#fff" : theme.mut }}>{d.label}</Body>
+                </Pressable>
+              </TourTarget>
             );
           })}
         </View>
@@ -87,9 +94,11 @@ export default function Parcels() {
           {STATUS_GROUPS.map((g) => {
             const on = g === status;
             return (
-              <Pressable key={g} onPress={() => setStatus(g)} style={{ backgroundColor: on ? theme.navy : theme.card, borderColor: on ? theme.navy : theme.line, borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: 16, paddingVertical: 10 }}>
-                <Body size={font.s13} weight="600" style={{ color: on ? "#fff" : theme.mut }}>{t(GROUP_LABEL[g])}{qty?.[g] ? ` (${qty[g]})` : ""}</Body>
-              </Pressable>
+              <TourTarget key={g} id={`parcels.status.${g}`} onPress={() => setStatus(g)}>
+                <Pressable onPress={() => setStatus(g)} style={{ backgroundColor: on ? theme.navy : theme.card, borderColor: on ? theme.navy : theme.line, borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: 16, paddingVertical: 10 }}>
+                  <Body size={font.s13} weight="600" style={{ color: on ? "#fff" : theme.mut }}>{t(GROUP_LABEL[g])}{qty?.[g] ? ` (${qty[g]})` : ""}</Body>
+                </Pressable>
+              </TourTarget>
             );
           })}
         </ScrollView>
@@ -104,7 +113,7 @@ export default function Parcels() {
           <ProfileGateCard />
         ) : orders?.length ? (
           <TileGrid columns={desktop ? 2 : 1}>
-            {orders.map((o) => <OrderCard key={o.id} order={o} status={status} />)}
+            {orders.map((o, i) => <OrderCard key={o.id} order={o} status={status} first={i === 0} />)}
           </TileGrid>
         ) : (
           <EmptyIncoming />
@@ -130,7 +139,7 @@ function EmptyIncoming() {
 type Action = { key: string; label: string; icon: React.ComponentProps<typeof Ionicons>["name"]; enabled?: boolean; done?: boolean; onPress?: () => void };
 
 /** One inbound parcel: kraft box, name + tracking, stage bar, four action pills, pay button. */
-function OrderCard({ order, status }: { order: Order; status: string }) {
+function OrderCard({ order, status, first }: { order: Order; status: string; first?: boolean }) {
   const { theme } = useTokens();
   const t = useT();
   const ka = useLang() === "ka";
@@ -160,19 +169,19 @@ function OrderCard({ order, status }: { order: Order; status: string }) {
       <ParcelProgress status={order.status} />
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm, marginTop: space.lg }}>
         {actions.map((a) => (
-          <View key={a.key} style={{ width: "48%" }}>
+          <TourTarget key={a.key} id={first && a.enabled ? `parcels.${a.key}` : undefined} onPress={a.onPress} style={{ width: "48%" }}>
             <Pressable disabled={!a.enabled || !a.onPress} onPress={a.onPress} style={{ flexDirection: "row", alignItems: "center", gap: 7, backgroundColor: a.enabled ? theme.card : theme.lineSoft, borderWidth: 1, borderColor: a.enabled ? theme.line : "transparent", borderRadius: radius.pill, paddingVertical: 11, paddingHorizontal: 13, opacity: a.enabled ? 1 : 0.5 }}>
               <Ionicons name={a.icon} size={15} color={a.enabled ? theme.ink : theme.faint} />
               <Body size={font.s12} weight="600" numberOfLines={1} style={{ flex: 1, minWidth: 0 }}>{a.label}</Body>
               {a.done ? <Ionicons name="checkmark-circle" size={15} color={theme.ok} /> : null}
             </Pressable>
-          </View>
+          </TourTarget>
         ))}
       </View>
       {payable ? (
-        <View style={{ marginTop: space.md }}>
+        <TourTarget id={first ? "parcels.pay" : undefined} onPress={pay} style={{ marginTop: space.md }}>
           <Btn label={t("pay")} variant="danger" icon="card-outline" onPress={pay} />
-        </View>
+        </TourTarget>
       ) : order.payed ? (
         <View style={{ marginTop: space.md, alignItems: "center" }}>
           <Pill text={t("paid")} tone="ok" />
