@@ -23,7 +23,8 @@ come straight from that bundle, not from eyeballing.
 | Loyalty (points card, active rewards, tiers, rewards with redeem sheet, history) | ✅ |
 | Calculator (receive/send, route, weight, item value, delivery options, live quote) | ✅ |
 | Rates (hero banner with plane, per-kg route cards, perks) | ✅ |
-| My code, Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| My code (room-number barcode card, simulated label scanner) | ✅ |
+| Reels, Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run

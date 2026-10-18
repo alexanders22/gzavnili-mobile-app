@@ -20,7 +20,7 @@ Route → module id (from module 9):
 | route | id | | route | id |
 |---|---|---|---|---|
 | (tabs)/_layout | 10 | | loyalty | 1168 ✅ |
-| (tabs)/add-tracking | 898 | | my-code | 1169 |
+| (tabs)/add-tracking | 898 | | my-code | 1169 ✅ |
 | (tabs)/address | 910 ✅ | | pay/[id] | 1171 |
 | (tabs)/index (home) | 1030 ✅ | | profile | 1172 |
 | (tabs)/more | 1065 ✅ | | rates | 1173 ✅ |
@@ -41,6 +41,7 @@ Route → module id (from module 9):
 | | | | Picker / BottomSheet | 1028 / 1029 ✅ |
 | | | | ParcelProgress / STATUS_GROUPS / ProfileGateCard | 1070 / 1067 / 1033 ✅ |
 | | | | ModuleTile + NewBadge / shop catalog | 909 / 1032 ✅ |
+| | | | Barcode (Code 128) | 1170 ✅ |
 | | | | hand-drawn icon wrapper / stroke map | 15 / 275 ✅ |
 | | | | demo adapter | 1024 ✅ |
 

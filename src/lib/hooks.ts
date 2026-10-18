@@ -147,3 +147,9 @@ export type CalcQuote = {
 export const useCalculatorMeta = () => useQuery<CalcMeta>({ queryKey: ["calculatorMeta"], staleTime: Infinity, queryFn: () => api.get("/calculator/meta") });
 export const useCalculatorQuote = (params: CalcParams) =>
   useQuery<CalcQuote>({ queryKey: ["calculator", params], placeholderData: keepPreviousData, staleTime: 60_000, queryFn: () => api.post("/calculator", params) });
+
+export type DemoTracking = { carrier: string; tracking_number: string; name: string; origin: "usa" | "china" };
+/** A fresh demo tracking number from the backend (the web demo "scans" one). */
+export function useDemoTracking() {
+  return useMutation({ mutationFn: async (carrier?: string) => (await api.get("/tracking/demo", carrier ? { params: { carrier } } : undefined)) as DemoTracking });
+}

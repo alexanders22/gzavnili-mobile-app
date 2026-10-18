@@ -148,6 +148,14 @@ function calculatorQuote(q: any) {
 
 function handle(method: string, path: string, body: any) {
   const p = path.split("?")[0];
+  if (p.includes("/tracking/demo")) {
+    const carriers = ["UPS", "USPS", "FedEx", "DHL"];
+    const names = ["Nike sneakers", "AirPods Pro", "Lego Technic set", "Wool blend coat", "Kindle Paperwhite"];
+    const carrier = carriers[Math.floor(Math.random() * carriers.length)];
+    const digits = () => String(Math.floor(1e9 + Math.random() * 9e9));
+    const tracking = carrier === "UPS" ? `1Z999AA1${digits()}` : carrier === "USPS" ? `9400111206${digits()}` : `${digits()}${digits().slice(0, 2)}`;
+    return { carrier, tracking_number: tracking, name: names[Math.floor(Math.random() * names.length)], origin: Math.random() < 0.8 ? "usa" : "china" };
+  }
   if (p === "/calculator/meta") return { origins: CALC.origins, countries: CALC.countries, max_weight: CALC.max_weight, fx: CALC.fx, fees: CALC.fees };
   if (p === "/calculator" && method === "post") {
     const q = calculatorQuote(body ?? {});
