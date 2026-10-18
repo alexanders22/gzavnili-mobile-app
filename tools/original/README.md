@@ -23,7 +23,7 @@ Route → module id (from module 9):
 | (tabs)/add-tracking | 898 | | my-code | 1169 |
 | (tabs)/address | 910 ✅ | | pay/[id] | 1171 |
 | (tabs)/index (home) | 1030 ✅ | | profile | 1172 |
-| (tabs)/more | 1065 ✅ | | rates | 1173 |
+| (tabs)/more | 1065 ✅ | | rates | 1173 ✅ |
 | (tabs)/parcels | 1066 ✅ | | reels | 1174 |
 | (tabs)/send | 1071 ✅ | | referral | 1182 |
 | (tabs)/shop | 1072 ✅ | | settings | 1183 ✅ |
