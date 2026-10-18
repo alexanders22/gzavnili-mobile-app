@@ -51,9 +51,9 @@ const warehouses = [
 ];
 
 const reels = [
-  { id: "r1", tone: "green", tagKa: "აქცია", tagEn: "DEAL", titleKa: "−20% პირველ ამანათზე", titleEn: "−20% on your first parcel", emoji: "🎉", media_type: null, media_url: null, seen: false },
-  { id: "r2", tone: "blue", tagKa: "სიახლე", tagEn: "NEW", titleKa: "ჩინეთიდან საჰაერო გზით", titleEn: "Air shipping from China", emoji: "✈️", media_type: null, media_url: null, seen: false },
-  { id: "r3", tone: "navy", tagKa: "რჩევა", tagEn: "TIP", titleKa: "როგორ დავადეკლარიროთ", titleEn: "How to declare in 30 s", emoji: "📝", media_type: null, media_url: null, seen: true },
+  { id: "r1", tone: "green", tagKa: "აქცია", tagEn: "DEAL", titleKa: "−20% პირველ ამანათზე", titleEn: "−20% on your first parcel", bodyKa: "დაამატე თრექინგი ამ კვირაში და ფასდაკლება ავტომატურად ჩაითვლება.", bodyEn: "Add a tracking number this week and the discount applies automatically.", emoji: "🎉", media_type: null, media_url: null, cta_route: "/add-incoming", seen: false },
+  { id: "r2", tone: "blue", tagKa: "სიახლე", tagEn: "NEW", titleKa: "ჩინეთიდან საჰაერო გზით", titleEn: "Air shipping from China", bodyKa: "10–14 დღე, $5/კგ. საზღვაო გზა კვლავ $3/კგ.", bodyEn: "10–14 days at $5/kg. Sea freight stays at $3/kg.", emoji: "✈️", media_type: null, media_url: null, cta_route: "/rates", seen: false },
+  { id: "r3", tone: "navy", tagKa: "რჩევა", tagEn: "TIP", titleKa: "როგორ დავადეკლარიროთ", titleEn: "How to declare in 30 s", bodyKa: "მაღაზიის ბმული, კატეგორია და ფასი — დანარჩენს ჩვენ ვავსებთ.", bodyEn: "Store link, category and price — we fill in the rest.", emoji: "📝", media_type: null, media_url: null, cta_route: null, seen: true },
 ];
 
 const outgoing = [

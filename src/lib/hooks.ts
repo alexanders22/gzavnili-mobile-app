@@ -17,7 +17,11 @@ export type Loyalty = {
   points: number; tier: LoyaltyTier; next: LoyaltyTier | null; to_next: number; progress: number;
   tiers: LoyaltyTier[]; rewards: LoyaltyReward[]; active_rewards: LoyaltyReward[]; history: LoyaltyEntry[];
 };
-export type Reel = { id: string; tone: "green" | "blue" | "navy"; tagKa: string; tagEn: string; titleKa: string; titleEn: string; emoji?: string | null; media_type?: "image" | "video" | null; media_url?: string | null; seen?: boolean };
+export type Reel = {
+  id: string; tone: "green" | "blue" | "navy"; tagKa: string; tagEn: string; titleKa: string; titleEn: string;
+  bodyKa?: string | null; bodyEn?: string | null; emoji?: string | null; media_type?: "image" | "video" | null; media_url?: string | null;
+  cta_route?: string | null; seen?: boolean;
+};
 export type OrderButtons = {
   declaration_enable?: boolean; custom_enable?: boolean; custom_right_icon_enable?: boolean; delivery_enable?: boolean;
   payment_enable?: boolean; is_payment_invoice_enabled?: boolean;

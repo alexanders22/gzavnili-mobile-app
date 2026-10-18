@@ -24,7 +24,8 @@ come straight from that bundle, not from eyeballing.
 | Calculator (receive/send, route, weight, item value, delivery options, live quote) | ✅ |
 | Rates (hero banner with plane, per-kg route cards, perks) | ✅ |
 | My code (room-number barcode card, simulated label scanner) | ✅ |
-| Reels, Assistant, Referral, Buy for me, Profile | placeholders |
+| Reels (full-screen stories with auto-advance, tap zones, video/image, CTA) | ✅ |
+| Assistant, Referral, Buy for me, Profile | placeholders |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run
