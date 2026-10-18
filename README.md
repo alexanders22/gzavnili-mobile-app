@@ -27,8 +27,9 @@ come straight from that bundle, not from eyeballing.
 | Reels (full-screen stories with auto-advance, tap zones, video/image, CTA) | ✅ |
 | Assistant (chat with bird fly-in, suggestions, typing dots, "How it works" tour menu) | ✅ |
 | Referral (bonus card, invite code with copy/share, invited friends) | ✅ |
+| Buy For Me (request form, how it works, demo requests) | ✅ |
 | Guided tour overlay (TourOverlay / TourTarget that highlights and taps through screens) | not started |
-| Buy for me, Profile | placeholders |
+| Profile | placeholder |
 | Parcel flows (add-incoming/outgoing, customs, declare, delivery, pay) | not started |
 
 ## Run
