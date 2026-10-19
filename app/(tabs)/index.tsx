@@ -185,11 +185,11 @@ export default function Home() {
             <View style={[styles.row, { gap: 6 }]}>
               <Body size={font.s18}>🇺🇸</Body>
               <Body size={font.s18}>🇨🇳</Body>
-              <Ionicons name="airplane" size={14} color={theme.brandText} />
+              <Ionicons name="airplane" size={14} color={theme.greenDeep} />
               <Body size={font.s18}>🇬🇪</Body>
             </View>
-            <Body size={font.s22} weight="800" numberOfLines={1} style={{ color: theme.brandText, marginTop: 6 }}>{ka ? "$6/კგ-დან" : "From $6 / kg"}</Body>
-            <Body size={font.s12} weight="600" numberOfLines={2} style={{ color: theme.brandText, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance & repacking included"}</Body>
+            <Body size={font.s22} weight="800" numberOfLines={1} style={{ color: theme.greenDeep, marginTop: 6 }}>{ka ? "$6/კგ-დან" : "From $6 / kg"}</Body>
+            <Body size={font.s12} weight="600" numberOfLines={2} style={{ color: theme.greenDeep, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance & repacking included"}</Body>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.greenDeep, borderRadius: radius.pill, paddingHorizontal: 15, paddingVertical: 10 }}>
             <Body size={font.s12} weight="700" style={{ color: "#fff" }}>{ka ? "ტარიფები" : "View rates"}</Body>
@@ -200,8 +200,8 @@ export default function Home() {
           {RATE_CHIPS.map((c, i) => (
             <View key={i} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, alignItems: "center", gap: 2, backgroundColor: "rgba(255,255,255,0.55)", borderRadius: radius.md, paddingVertical: 9 }}>
               <Body size={font.s13}>{c.flag}</Body>
-              <Body size={font.s13} weight="800" style={{ color: theme.brandText }}>${c.price}</Body>
-              <Body size={10} weight="600" style={{ color: theme.brandText, opacity: 0.7 }}>{c.days} {ka ? "დღე" : "days"}</Body>
+              <Body size={font.s13} weight="800" style={{ color: theme.greenDeep }}>${c.price}</Body>
+              <Body size={10} weight="600" style={{ color: theme.greenDeep, opacity: 0.7 }}>{c.days} {ka ? "დღე" : "days"}</Body>
             </View>
           ))}
         </View>

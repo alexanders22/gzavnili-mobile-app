@@ -35,11 +35,11 @@ export default function Rates() {
         <View style={[styles.row, { gap: space.sm }]}>
           <Body size={font.s28}>🇺🇸</Body>
           <Body size={font.s28}>🇨🇳</Body>
-          <View style={{ flex: 1, alignItems: "center" }}><PlaneArt size={110} color={theme.brandText} /></View>
+          <View style={{ flex: 1, alignItems: "center" }}><PlaneArt size={110} color={theme.greenDeep} /></View>
           <Body size={font.s28}>🇬🇪</Body>
         </View>
-        <Body size={font.s28} weight="800" style={{ color: theme.brandText, marginTop: space.md }}>{ka ? "$3/კგ-დან" : "From $3 / kg"}</Body>
-        <Body size={font.s13} weight="600" style={{ color: theme.brandText, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance and repacking included"}</Body>
+        <Body size={font.s28} weight="800" style={{ color: theme.greenDeep, marginTop: space.md }}>{ka ? "$3/კგ-დან" : "From $3 / kg"}</Body>
+        <Body size={font.s13} weight="600" style={{ color: theme.greenDeep, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance and repacking included"}</Body>
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm, marginTop: space.lg, backgroundColor: theme.greenDeep, borderRadius: radius.md, paddingHorizontal: space.md, paddingVertical: 11 }}>
           <Ionicons name="paper-plane" size={15} color={theme.green} />
           <View style={{ flex: 1, minWidth: 0 }}>
