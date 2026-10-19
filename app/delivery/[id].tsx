@@ -76,7 +76,7 @@ export default function Delivery() {
             return (
               <View key={s.en} style={[styles.row, { gap: space.md, paddingVertical: 7 }]}>
                 <View style={{ width: 22, height: 22, borderRadius: 11, alignItems: "center", justifyContent: "center", backgroundColor: done ? theme.green : current ? theme.tint2 : theme.paper, borderWidth: current ? 2 : 0, borderColor: theme.green }}>
-                  {done ? <Ionicons name="checkmark" size={13} color={theme.greenDeep} /> : null}
+                  {done ? <Ionicons name="checkmark" size={13} color={theme.brandText} /> : null}
                 </View>
                 <Body size={font.s13} weight={current ? "700" : "500"} style={{ color: done || current ? theme.ink : theme.faint }}>{ka ? s.ka : s.en}</Body>
               </View>
@@ -92,7 +92,7 @@ export default function Delivery() {
             </View>
           ) : (
             <Pressable onPress={() => setChoosing(true)} style={{ alignSelf: "center", marginTop: space.md }}>
-              <Body size={font.s13} weight="600" style={{ color: theme.greenDeep }}>{ka ? "სხვა ოფისის არჩევა" : "Choose another office"}</Body>
+              <Body size={font.s13} weight="600" style={{ color: theme.brandText }}>{ka ? "სხვა ოფისის არჩევა" : "Choose another office"}</Body>
             </Pressable>
           )
         ) : null}
@@ -107,7 +107,7 @@ export default function Delivery() {
       <Screen>
         {header}
         <Card style={{ marginTop: space.lg, alignItems: "center", paddingVertical: 32 }}>
-          <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="car" size={28} color={theme.greenDeep} /></View>
+          <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="car" size={28} color={theme.brandText} /></View>
           <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "მიწოდება დაჯავშნილია" : "Delivery booked"}</Body>
           <Body muted size={font.s13} style={{ marginTop: 6 }}>{order?.timeSlot ?? slot} · {day === "today" ? (ka ? "დღეს" : "today") : ka ? "ხვალ" : "tomorrow"}</Body>
           <Body muted size={font.s12} style={{ marginTop: 10, textAlign: "center" }}>{address?.address}{address?.city ? `, ${address.city}` : ""}</Body>
@@ -137,7 +137,7 @@ export default function Delivery() {
             const on = courier === m.on;
             return (
               <Pressable key={String(m.on)} onPress={() => switchMode(m.on)} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, flexDirection: "row", alignItems: "center", gap: space.sm, padding: space.md, borderRadius: radius.md, borderWidth: 1.5, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint : theme.card }}>
-                <Ionicons name={m.icon} size={20} color={theme.greenDeep} />
+                <Ionicons name={m.icon} size={20} color={theme.brandText} />
                 <View style={{ flex: 1, minWidth: 0 }}>
                   <Body weight="700" size={font.s13} numberOfLines={1}>{m.label}</Body>
                   <Body muted size={font.s11} numberOfLines={1}>{m.sub}</Body>
@@ -153,7 +153,7 @@ export default function Delivery() {
           <SectionLabel>{ka ? "მისამართი" : "Address"}</SectionLabel>
           <Card>
             <View style={[styles.row, { gap: space.md }]}>
-              <View style={{ width: 38, height: 38, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="location-outline" size={18} color={theme.greenDeep} /></View>
+              <View style={{ width: 38, height: 38, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="location-outline" size={18} color={theme.brandText} /></View>
               <View style={{ flex: 1, minWidth: 0 }}>
                 <Body weight="600" numberOfLines={1}>{address?.title ?? "—"}</Body>
                 <Body muted size={font.s12} numberOfLines={1}>{address?.address}{address?.city ? `, ${address.city}` : ""}</Body>

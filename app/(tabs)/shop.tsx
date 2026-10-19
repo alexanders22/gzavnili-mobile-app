@@ -133,8 +133,8 @@ export default function Shop() {
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: space.md, alignItems: "center" }}>
             {active.map((a) => (
               <Pressable key={a.key} onPress={a.clear} style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: theme.tint2, borderRadius: radius.pill, paddingLeft: 10, paddingRight: 7, paddingVertical: 5 }}>
-                <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{a.label}</Body>
-                <Ionicons name="close" size={14} color={theme.greenDeep} />
+                <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{a.label}</Body>
+                <Ionicons name="close" size={14} color={theme.brandText} />
               </Pressable>
             ))}
             <Pressable onPress={clearAll} hitSlop={6} style={{ paddingHorizontal: 6 }}>
@@ -191,7 +191,7 @@ export default function Shop() {
                   <Pressable key={s.name} onPress={() => setStores((x) => toggle(x, s.name))} style={{ width: 132, padding: space.md, borderRadius: radius.lg, borderWidth: 1.5, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint : theme.card }}>
                     <View style={styles.between}>
                       <Body size={font.s18}>{s.emoji}</Body>
-                      {on ? <Ionicons name="checkmark-circle" size={18} color={theme.greenDeep} /> : null}
+                      {on ? <Ionicons name="checkmark-circle" size={18} color={theme.brandText} /> : null}
                     </View>
                     <Body weight="700" size={font.s13} numberOfLines={1} style={{ marginTop: space.sm }}>{s.name}</Body>
                     <Body muted size={font.s11} numberOfLines={1}>{s.blurb}</Body>
@@ -248,7 +248,7 @@ export default function Shop() {
                 {i > 0 ? <Divider /> : null}
                 <Pressable onPress={() => setSort(s.id)} style={[styles.between, { paddingHorizontal: space.md, paddingVertical: 12 }]}>
                   <Body size={font.s13} weight={sort === s.id ? "700" : "500"}>{ka ? s.ka : s.en}</Body>
-                  <Ionicons name={sort === s.id ? "radio-button-on" : "radio-button-off"} size={18} color={sort === s.id ? theme.greenDeep : theme.faint} />
+                  <Ionicons name={sort === s.id ? "radio-button-on" : "radio-button-off"} size={18} color={sort === s.id ? theme.brandText : theme.faint} />
                 </Pressable>
               </View>
             ))}

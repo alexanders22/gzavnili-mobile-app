@@ -27,7 +27,7 @@ export default function More() {
       <Card style={{ borderWidth: 0, backgroundColor: "transparent", paddingHorizontal: 0, paddingVertical: 13 }} onPress={() => router.push(m.route as any)}>
         <View style={[styles.row, { gap: space.md }]}>
           <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name={`${m.icon}-outline` as any} size={17} color={theme.greenDeep} />
+            <Ionicons name={`${m.icon}-outline` as any} size={17} color={theme.brandText} />
           </View>
           <View style={{ flex: 1 }}>
             <Body weight="600">{lang === "ka" ? m.titleKa : m.titleEn}</Body>

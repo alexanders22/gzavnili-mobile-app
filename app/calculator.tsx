@@ -69,7 +69,7 @@ export default function Calculator() {
 
   const Chip = ({ on, label, onPress }: { on: boolean; label: string; onPress: () => void }) => (
     <Pressable onPress={onPress} style={{ paddingHorizontal: 13, paddingVertical: 8, borderRadius: radius.pill, borderWidth: 1, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint2 : theme.card }}>
-      <Body size={font.s12} weight={on ? "700" : "500"} style={{ color: on ? theme.greenDeep : theme.ink }}>{label}</Body>
+      <Body size={font.s12} weight={on ? "700" : "500"} style={{ color: on ? theme.brandText : theme.ink }}>{label}</Body>
     </Pressable>
   );
   const Endpoint = ({ flag, caption, name, align }: { flag: string; caption: string; name: string; align: "left" | "right" }) => (
@@ -88,8 +88,8 @@ export default function Calculator() {
           const on = direction === d.id;
           return (
             <Pressable key={d.id} onPress={() => setDirection(d.id)} style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 10, borderRadius: radius.pill, backgroundColor: on ? theme.card : "transparent" }}>
-              <Ionicons name={d.icon} size={15} color={on ? theme.greenDeep : theme.mut} />
-              <Body size={font.s13} weight={on ? "700" : "500"} style={{ color: on ? theme.greenDeep : theme.mut }}>{d.label}</Body>
+              <Ionicons name={d.icon} size={15} color={on ? theme.brandText : theme.mut} />
+              <Body size={font.s13} weight={on ? "700" : "500"} style={{ color: on ? theme.brandText : theme.mut }}>{d.label}</Body>
             </Pressable>
           );
         })}
@@ -102,7 +102,7 @@ export default function Calculator() {
           {direction === "in" ? <Endpoint flag={from.flag} caption={ka ? "საიდან" : "From"} name={ka ? from.nameKa : from.name} align="left" /> : <Endpoint flag="🇬🇪" caption={ka ? "საიდან" : "From"} name={ka ? "თბილისი" : "Tbilisi"} align="left" />}
           <View style={{ alignItems: "center", gap: 6 }}>
             <View style={{ width: 38, height: 38, borderRadius: 19, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="airplane" size={18} color={theme.greenDeep} />
+              <Ionicons name="airplane" size={18} color={theme.brandText} />
             </View>
             <Body muted size={font.s11}>{direction === "in" ? from.days : to.days} {ka ? "დღე" : "days"}</Body>
           </View>

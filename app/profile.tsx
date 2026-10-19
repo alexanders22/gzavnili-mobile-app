@@ -248,7 +248,7 @@ function Field({ tag, value, placeholder, onChangeText, onBlur, busy = false, ai
         keyboardType={keyboardType}
         style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, minWidth: 0, paddingVertical: 11, color: theme.ink, fontSize: font.s14 }}
       />
-      {busy ? <ActivityIndicator size="small" color={theme.green} /> : ai ? <Ionicons name="sparkles" size={15} color={theme.greenDeep} /> : null}
+      {busy ? <ActivityIndicator size="small" color={theme.green} /> : ai ? <Ionicons name="sparkles" size={15} color={theme.brandText} /> : null}
     </View>
   );
 }

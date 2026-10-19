@@ -13,7 +13,7 @@ export function Placeholder({ title, icon = "construct-outline", back = true }: 
     <Screen title={title} back={back}>
       <Card style={{ alignItems: "center", paddingVertical: space.xxl, marginTop: space.lg }}>
         <View style={{ width: 56, height: 56, borderRadius: radius.md, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center", marginBottom: space.md }}>
-          <Ionicons name={icon} size={26} color={theme.greenDeep} />
+          <Ionicons name={icon} size={26} color={theme.brandText} />
         </View>
         <Title>{title}</Title>
         <Body muted size={font.s13} style={{ marginTop: 6, textAlign: "center" }}>{ka ? "ეკრანი მალე დაემატება" : "This screen is being rebuilt"}</Body>

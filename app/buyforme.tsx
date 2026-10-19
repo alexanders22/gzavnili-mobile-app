@@ -45,7 +45,7 @@ export default function BuyForMe() {
       {sent ? (
         <Card style={{ marginTop: space.lg, alignItems: "center", paddingVertical: 30 }}>
           <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="checkmark" size={30} color={theme.greenDeep} />
+            <Ionicons name="checkmark" size={30} color={theme.brandText} />
           </View>
           <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "მოთხოვნა გაიგზავნა" : "Request sent"}</Body>
           <Body muted size={font.s12} style={{ marginTop: 4, textAlign: "center" }}>{ka ? "ფასს გამოგიგზავნით 24 საათში" : "We'll send you a quote within 24 hours"}</Body>
@@ -64,7 +64,7 @@ export default function BuyForMe() {
             {steps.map((s, i) => (
               <View key={s} style={[styles.row, { gap: space.md, paddingVertical: 9 }]}>
                 <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-                  <Body size={font.s11} weight="800" style={{ color: theme.greenDeep }}>{i + 1}</Body>
+                  <Body size={font.s11} weight="800" style={{ color: theme.brandText }}>{i + 1}</Body>
                 </View>
                 <Body size={font.s13} style={{ flex: 1, minWidth: 0 }}>{s}</Body>
               </View>

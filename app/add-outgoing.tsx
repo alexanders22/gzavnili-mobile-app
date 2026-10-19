@@ -135,7 +135,7 @@ export default function AddOutgoing() {
     return (
       <Screen>
         <Card style={{ marginTop: space.xxl, alignItems: "center", paddingVertical: 36 }}>
-          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="paper-plane" size={30} color={theme.greenDeep} /></View>
+          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="paper-plane" size={30} color={theme.brandText} /></View>
           <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "გზავნილი შექმნილია" : "Shipment created"}</Body>
           <Body weight="600" size={font.s13} style={{ marginTop: 4 }}>{created?.tracking_number}</Body>
           <Body muted size={font.s12} style={{ marginTop: 6, textAlign: "center" }}>{pickup ? (ka ? "კურიერი ჩამოვა მითითებულ მისამართზე" : "A courier will collect it from your address") : ka ? "ჩააბარე ამანათი უახლოეს ფილიალში" : "Drop the parcel at your nearest branch"}</Body>
@@ -236,8 +236,8 @@ export default function AddOutgoing() {
               <View style={[styles.row, { gap: space.md }]}>
                 <TourTarget id="outgoing.demoRecipient" onPress={fillDemo}>
                   <Pressable onPress={fillDemo} hitSlop={8} style={[styles.row, { gap: 5 }]}>
-                    <Ionicons name="flask-outline" size={13} color={theme.greenDeep} />
-                    <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{ka ? "სადემო" : "Demo"}</Body>
+                    <Ionicons name="flask-outline" size={13} color={theme.brandText} />
+                    <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{ka ? "სადემო" : "Demo"}</Body>
                   </Pressable>
                 </TourTarget>
                 <TourTarget id="outgoing.contacts">

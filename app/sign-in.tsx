@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, Pressable, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Pressable, TextInput, View, useWindowDimensions } from "react-native";
 import { Ionicons } from "@/ui/Icon";
 import { router } from "expo-router";
 import { font, radius, space } from "@/lib/theme";
@@ -9,7 +9,8 @@ import { apiError } from "@/lib/api";
 import { useLogin, useReferralCheck, useRegister } from "@/lib/hooks";
 import { Body, Btn, Screen, Title, styles, useTokens } from "@/ui";
 import { BrandLogo } from "@/ui/Brand";
-import { Drawing, Note } from "@/components/Drawing";
+import { Note } from "@/components/Drawing";
+import { HeroArt } from "@/components/HeroArt";
 
 // The public demo account is prefilled, exactly like the original app.
 const DEMO_LOGIN = { username: "demo@gzavnili.ge", password: "Demo1234!" };
@@ -17,6 +18,7 @@ const DEMO_LOGIN = { username: "demo@gzavnili.ge", password: "Demo1234!" };
 export default function SignIn() {
   const t = useT();
   const { theme } = useTokens();
+  const { width } = useWindowDimensions();
   const ka = useLang() === "ka";
   const setLang = useSettings((s) => s.setLang);
   const login = useLogin();
@@ -63,8 +65,8 @@ export default function SignIn() {
         </View>
 
         <View style={{ marginBottom: space.lg }}>
-          <Drawing name="hero" width={300} float style={{ alignSelf: "flex-start", marginLeft: -12 }} />
-          <Note size={20} style={{ position: "absolute", right: 0, top: 0 }}>{ka ? "იგივე ადამიანები.\nმეტი შესაძლებლობა." : "Same people.\nBigger possibilities."}</Note>
+          <HeroArt width={Math.min(width - space.lg * 2, 400)} style={{ alignSelf: "center" }} />
+          <Note size={20} style={{ position: "absolute", right: 0, top: -4 }}>{ka ? "იგივე ადამიანები.\nმეტი შესაძლებლობა." : "Same people.\nBigger possibilities."}</Note>
         </View>
 
         <Title>{mode === "login" ? t("signIn") : ka ? "ანგარიშის შექმნა" : "Create account"}</Title>
@@ -108,8 +110,8 @@ export default function SignIn() {
 
         <Btn label={mode === "login" ? t("continue") : ka ? "ანგარიშის შექმნა" : "Create account"} onPress={submit} loading={busy} disabled={!email.trim() || password.length < 6} style={{ marginTop: space.xl }} />
         <Pressable onPress={fillDemo} style={[styles.row, { gap: 6, justifyContent: "center", marginTop: space.lg }]} hitSlop={8}>
-          <Ionicons name="flask-outline" size={14} color={theme.greenDeep} />
-          <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>
+          <Ionicons name="flask-outline" size={14} color={theme.brandText} />
+          <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>
             {mode === "login" ? (ka ? "სადემონსტრაციო ანგარიში" : "Use the demo account") : ka ? "შეავსე სადემონსტრაციო მონაცემებით" : "Fill with demo details"}
           </Body>
         </Pressable>

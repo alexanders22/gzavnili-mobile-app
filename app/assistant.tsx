@@ -12,7 +12,7 @@ import { useTour } from "@/lib/tour";
 import { TOURS } from "@/data/tours";
 import { Body, Title, styles, useTokens } from "@/ui";
 import { Drawing, Note } from "@/components/Drawing";
-import { DrawnBird } from "@/components/DrawnBird";
+import { FlyingMark } from "@/ui/Brand";
 
 const leave = () => (router.canGoBack() ? router.back() : router.replace("/"));
 
@@ -84,7 +84,7 @@ export default function Assistant() {
         <View style={[styles.between, { padding: space.lg }]}>
           <View style={[styles.row, { gap: space.md }]}>
             <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: theme.green, alignItems: "center", justifyContent: "center" }}>
-              <DrawnBird size={22} fill="#FFFFFF" />
+              <FlyingMark size={22} color="#FFFFFF" />
             </View>
             <Title style={{ fontSize: font.s16 }}>{t("assistant")}</Title>
           </View>
@@ -123,13 +123,13 @@ export default function Assistant() {
                 {TOURS.map((tour) => (
                   <Pressable key={tour.id} onPress={() => runTour(tour.id)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: space.md, padding: space.md, borderRadius: radius.md, backgroundColor: pressed ? theme.tint2 : theme.paper })}>
                     <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-                      <Ionicons name={tour.icon as any} size={18} color={theme.greenDeep} />
+                      <Ionicons name={tour.icon as any} size={18} color={theme.brandText} />
                     </View>
                     <View style={{ flex: 1, minWidth: 0 }}>
                       <Body weight="700" size={font.s13} numberOfLines={1}>{ka ? tour.title.ka : tour.title.en}</Body>
                       <Body muted size={font.s11} numberOfLines={1}>{ka ? tour.blurb.ka : tour.blurb.en}</Body>
                     </View>
-                    <Ionicons name="play-circle" size={24} color={theme.greenDeep} />
+                    <Ionicons name="play-circle" size={24} color={theme.brandText} />
                   </Pressable>
                 ))}
               </View>
@@ -152,7 +152,7 @@ export default function Assistant() {
             </Pressable>
             {suggestions.map((s) => (
               <Pressable key={s} onPress={() => send(s)} disabled={chat.isPending} style={{ backgroundColor: theme.tint, borderRadius: radius.pill, paddingHorizontal: 14, paddingVertical: 9, opacity: chat.isPending ? 0.5 : 1 }}>
-                <Body size={font.s12} style={{ color: theme.greenDeep }} weight="600">{s}</Body>
+                <Body size={font.s12} style={{ color: theme.brandText }} weight="600">{s}</Body>
               </Pressable>
             ))}
           </ScrollView>
@@ -177,7 +177,7 @@ export default function Assistant() {
             { rotate: bird.interpolate({ inputRange: [0, 1, 2], outputRange: ["-20deg", "0deg", "-24deg"] }) },
             { scale: bird.interpolate({ inputRange: [0, 1, 2], outputRange: [0.5, 1, 0.55] }) },
           ] }}>
-          <DrawnBird size={58} />
+          <FlyingMark size={58} float />
         </Animated.View>
       </Animated.View>
     </SafeAreaView>

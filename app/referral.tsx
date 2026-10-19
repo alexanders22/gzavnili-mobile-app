@@ -114,7 +114,7 @@ export default function ReferralScreen() {
                 {i > 0 ? <Divider /> : null}
                 <View style={[styles.row, { gap: space.md, paddingVertical: 14 }]}>
                   <View style={{ width: 38, height: 38, borderRadius: 19, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-                    <Body weight="700" style={{ color: theme.greenDeep }}>{(f.name?.trim()?.[0] ?? "?").toUpperCase()}</Body>
+                    <Body weight="700" style={{ color: theme.brandText }}>{(f.name?.trim()?.[0] ?? "?").toUpperCase()}</Body>
                   </View>
                   <View style={{ flex: 1, minWidth: 0 }}>
                     <Body weight="600" numberOfLines={1}>{f.name}</Body>

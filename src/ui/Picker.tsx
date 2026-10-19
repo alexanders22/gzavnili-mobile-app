@@ -84,7 +84,7 @@ function OptionRow({ option, index, fan, selected, onPress }: { option: PickerOp
           {option.detail ? <Body size={font.s11} numberOfLines={1} style={{ marginTop: 2, color: theme.faint }}>{option.detail}</Body> : null}
         </View>
         <View style={{ width: 22, height: 22, borderRadius: 11, alignItems: "center", justifyContent: "center", backgroundColor: selected ? theme.green : "transparent", borderWidth: selected ? 0 : 1.5, borderColor: theme.line }}>
-          {selected ? <Ionicons name="checkmark" size={14} color={theme.greenDeep} /> : null}
+          {selected ? <Ionicons name="checkmark" size={14} color={theme.brandText} /> : null}
         </View>
       </Pressable>
     </Animated.View>

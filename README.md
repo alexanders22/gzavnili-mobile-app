@@ -67,6 +67,15 @@ src/data/shop.ts     demo shop catalog
 tools/original/      the prettified original bundle + extractor
 ```
 
+## Design
+
+The app shares the landing v2 brand (`../gzavnili-landing-v2`): the brandbook palette in `src/lib/theme.ts` (light tokens are identical to the
+landing's CSS variables; dark is the landing's liquid-glass look — `#06080C` page, translucent surfaces with a glass edge, glowing green, ambient
+blue/green light from `src/components/Ambient.tsx`), the flying logo mark (`FlyingMark` in `src/ui/Brand.tsx`, wing flap + bob like the landing's
+`.gzfly`), the landing's animated page illustrations copied to `assets/ill/` with their dark twins (`src/components/Illustration.tsx`), the hero
+photo scene on sign-in (`assets/art/`, `src/components/HeroArt.tsx`), Caveat / DM Maro handwriting for notes and Geist Mono eyebrows. When the
+landing's design changes, re-copy `assets/ill`, `assets/*.webp|png` and update the tokens here.
+
 ## Deploy (web)
 
 ```bash

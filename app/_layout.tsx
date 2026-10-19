@@ -9,6 +9,8 @@ import { Geist_400Regular, Geist_500Medium, Geist_600SemiBold, Geist_700Bold, Ge
 import { NotoSansGeorgian_400Regular, NotoSansGeorgian_500Medium, NotoSansGeorgian_600SemiBold, NotoSansGeorgian_700Bold, NotoSansGeorgian_800ExtraBold } from "@expo-google-fonts/noto-sans-georgian";
 import { NotoSerifGeorgian_500Medium } from "@expo-google-fonts/noto-serif-georgian";
 import { InstrumentSerif_400Regular_Italic } from "@expo-google-fonts/instrument-serif";
+import { Caveat_500Medium } from "@expo-google-fonts/caveat";
+import { GeistMono_500Medium } from "@expo-google-fonts/geist-mono";
 import { darkTheme, lightTheme } from "@/lib/theme";
 import { useIsDark } from "@/lib/settings";
 import { FONT_ASSETS } from "@/lib/fonts";
@@ -29,7 +31,7 @@ export default function RootLayout() {
     ...FONT_ASSETS,
     Geist_400Regular, Geist_500Medium, Geist_600SemiBold, Geist_700Bold, Geist_800ExtraBold,
     NotoSansGeorgian_400Regular, NotoSansGeorgian_500Medium, NotoSansGeorgian_600SemiBold, NotoSansGeorgian_700Bold, NotoSansGeorgian_800ExtraBold,
-    NotoSerifGeorgian_500Medium, InstrumentSerif_400Regular_Italic,
+    NotoSerifGeorgian_500Medium, InstrumentSerif_400Regular_Italic, Caveat_500Medium, GeistMono_500Medium,
   });
   const ready = tokenChecked && (fontsLoaded || !!fontError);
   return (

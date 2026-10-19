@@ -85,7 +85,7 @@ export default function LoyaltyScreen() {
                 {i > 0 ? <Divider /> : null}
                 <View style={[styles.row, { gap: space.md, paddingVertical: 13 }]}>
                   <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-                    <Ionicons name="ticket-outline" size={17} color={theme.greenDeep} />
+                    <Ionicons name="ticket-outline" size={17} color={theme.brandText} />
                   </View>
                   <View style={{ flex: 1, minWidth: 0 }}>
                     <Body weight="600" numberOfLines={1}>{ka ? r.title_ka : r.title_en}</Body>
@@ -125,7 +125,7 @@ export default function LoyaltyScreen() {
             {i > 0 ? <Divider /> : null}
             <Pressable disabled={!r.available} onPress={() => { redeem.reset(); setDone(false); setPointsBefore(data.points); setPicked(r); }} style={[styles.row, { gap: space.md, paddingVertical: 14, opacity: r.available ? 1 : 0.45 }]}>
               <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-                <Ionicons name={r.available ? "gift-outline" : "lock-closed-outline"} size={17} color={theme.greenDeep} />
+                <Ionicons name={r.available ? "gift-outline" : "lock-closed-outline"} size={17} color={theme.brandText} />
               </View>
               <Body weight="600" numberOfLines={1} style={{ flex: 1, minWidth: 0 }}>{ka ? r.title_ka : r.title_en}</Body>
               <Pill text={`${r.cost} ${ka ? "ქულა" : "pts"}`} tone={r.available ? "ok" : "neutral"} />
@@ -158,7 +158,7 @@ export default function LoyaltyScreen() {
         {done ? (
           <View style={{ alignItems: "center" }}>
             <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="checkmark" size={30} color={theme.greenDeep} />
+              <Ionicons name="checkmark" size={30} color={theme.brandText} />
             </View>
             <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "ჯილდო გააქტიურდა" : "Reward applied"}</Body>
             <Body muted size={font.s12} style={{ marginTop: 4, textAlign: "center" }}>{ka ? "ავტომატურად გამოიყენება შემდეგ გადახდისას" : "Applied automatically at your next payment"}</Body>

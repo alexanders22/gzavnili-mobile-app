@@ -71,7 +71,7 @@ export default function Send() {
             <Pressable onPress={back} hitSlop={12}><Ionicons name="chevron-back" size={24} color={theme.ink} /></Pressable>
           ) : null}
           <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="logo-usd" size={16} color={theme.greenDeep} />
+            <Ionicons name="logo-usd" size={16} color={theme.brandText} />
           </View>
           <Title>{ka ? "ფულის გაგზავნა" : "Send Money"}</Title>
         </View>
@@ -153,7 +153,7 @@ export default function Send() {
       {step === "done" && recipient ? (
         <Card style={{ marginTop: space.xl, alignItems: "center", paddingVertical: 34 }}>
           <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="checkmark" size={32} color={theme.greenDeep} />
+            <Ionicons name="checkmark" size={32} color={theme.brandText} />
           </View>
           <Body weight="700" size={font.s18} style={{ marginTop: space.lg }}>{money(received, to)}</Body>
           <Body muted style={{ marginTop: 4 }}>{ka ? "გაიგზავნა" : "Sent to"} {recipient.name}</Body>

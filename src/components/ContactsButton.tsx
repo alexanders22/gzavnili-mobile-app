@@ -50,18 +50,18 @@ export function ContactsButton({ onPick, country, compact }: { onPick: (c: Picke
     <>
       {compact ? (
         <Pressable onPress={show} hitSlop={8} accessibilityLabel={ka ? "კონტაქტებიდან" : "From contacts"} style={({ pressed }) => ({ width: 30, height: 30, borderRadius: 15, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center", opacity: pressed ? 0.7 : 1 })}>
-          <Ionicons name="people-outline" size={15} color={theme.greenDeep} />
+          <Ionicons name="people-outline" size={15} color={theme.brandText} />
         </Pressable>
       ) : (
         <Pressable onPress={show} hitSlop={6} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 5, backgroundColor: theme.tint, borderRadius: radius.pill, paddingHorizontal: 11, paddingVertical: 6, opacity: pressed ? 0.7 : 1 })}>
-          <Ionicons name={syncedAt ? "people-outline" : "sync-outline"} size={14} color={theme.greenDeep} />
-          <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{syncedAt ? (ka ? "კონტაქტები" : "Contacts") : ka ? "კონტაქტების სინქრ." : "Sync contacts"}</Body>
+          <Ionicons name={syncedAt ? "people-outline" : "sync-outline"} size={14} color={theme.brandText} />
+          <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{syncedAt ? (ka ? "კონტაქტები" : "Contacts") : ka ? "კონტაქტების სინქრ." : "Sync contacts"}</Body>
         </Pressable>
       )}
       <BottomSheet visible={open} onClose={() => setOpen(false)}>
         {mode === "ask" ? (
           <View style={{ alignItems: "center" }}>
-            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="people" size={30} color={theme.greenDeep} /></View>
+            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="people" size={30} color={theme.brandText} /></View>
             <Body weight="700" size={font.s16} style={{ marginTop: space.lg, textAlign: "center" }}>{ka ? "„Gzavnili“ ითხოვს წვდომას კონტაქტებზე" : "“Gzavnili” would like to access your contacts"}</Body>
             <Body muted size={font.s13} style={{ marginTop: 6, textAlign: "center" }}>{ka ? "კონტაქტები გამოყენება მიმღებების სწრაფად შესავსებლად. არაფერი ატვირთება." : "They are used on this device to fill in recipients faster. Nothing is uploaded."}</Body>
             <Btn label={ka ? "დაშვება" : "Allow"} onPress={sync} style={{ alignSelf: "stretch", marginTop: space.xl }} />
@@ -69,7 +69,7 @@ export function ContactsButton({ onPick, country, compact }: { onPick: (c: Picke
           </View>
         ) : mode === "syncing" ? (
           <View style={{ alignItems: "center", paddingVertical: space.lg }}>
-            <Ionicons name="sync" size={30} color={theme.greenDeep} />
+            <Ionicons name="sync" size={30} color={theme.brandText} />
             <Body weight="700" size={font.s16} style={{ marginTop: space.md }}>{ka ? "კონტაქტების სინქრონიზაცია…" : "Syncing contacts…"}</Body>
             <View style={{ alignSelf: "stretch", height: 8, borderRadius: 4, backgroundColor: theme.lineSoft, marginTop: space.lg, overflow: "hidden" }}>
               <Animated.View style={{ height: 8, backgroundColor: theme.green, width: anim.interpolate({ inputRange: [0, 1], outputRange: ["0%", "100%"] }) }} />
@@ -101,7 +101,7 @@ export function ContactsButton({ onPick, country, compact }: { onPick: (c: Picke
                 <View key={c.id}>
                   {i > 0 ? <Divider /> : null}
                   <Pressable onPress={() => pick(c)} style={({ pressed }) => [styles.row, { gap: space.md, paddingVertical: 11, opacity: pressed ? 0.6 : 1 }]}>
-                    <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Body weight="700" size={font.s13} style={{ color: theme.greenDeep }}>{c.name[0]}</Body></View>
+                    <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Body weight="700" size={font.s13} style={{ color: theme.brandText }}>{c.name[0]}</Body></View>
                     <View style={{ flex: 1, minWidth: 0 }}>
                       <Body weight="600" size={font.s13} numberOfLines={1}>{c.name}</Body>
                       <Body muted size={font.s11} numberOfLines={1}>{formatPhone(c.parsed)}{c.address ? ` · ${c.address}` : ""}</Body>

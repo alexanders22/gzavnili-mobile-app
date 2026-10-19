@@ -75,7 +75,7 @@ export default function AddIncoming() {
       <Screen>
         <TourTarget id="incoming.done">
           <Card style={{ marginTop: space.xxl, alignItems: "center", paddingVertical: 34 }}>
-            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="checkmark" size={32} color={theme.greenDeep} /></View>
+            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}><Ionicons name="checkmark" size={32} color={theme.brandText} /></View>
             <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "ამანათი დაემატა" : "Parcel added"}</Body>
             <Body weight="600" size={font.s13} style={{ marginTop: 4 }}>{done}</Body>
             <View style={[styles.row, { gap: 6, marginTop: space.md }]}>
@@ -120,13 +120,13 @@ export default function AddIncoming() {
       <View style={{ flexDirection: "row", gap: space.sm }}>
         <TextInput value={tracking} onChangeText={setTracking} placeholder="1Z999AA10123456784" placeholderTextColor={theme.faint} autoCapitalize="characters" autoCorrect={false} style={{ ...field, flex: 1, minWidth: 0 }} />
         <Pressable onPress={() => router.push("/my-code?tab=scan" as any)} accessibilityLabel={ka ? "შტრიხკოდის სკანირება" : "Scan a barcode"} style={({ pressed }) => ({ width: 50, borderRadius: radius.md, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center", opacity: pressed ? 0.7 : 1 })}>
-          <Ionicons name="scan-outline" size={22} color={theme.greenDeep} />
+          <Ionicons name="scan-outline" size={22} color={theme.brandText} />
         </Pressable>
       </View>
       <TourTarget id="incoming.demo" onPress={useDemo} style={{ alignSelf: "flex-start", marginTop: space.sm }}>
         <Pressable onPress={useDemo} disabled={demo.isPending} hitSlop={6} style={[styles.row, { gap: 6 }]}>
-          {demo.isPending ? <ActivityIndicator size="small" color={theme.green} /> : <Ionicons name="sparkles" size={14} color={theme.greenDeep} />}
-          <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{ka ? "სადემონსტრაციო თრექინგ კოდი" : "Use a demo tracking code"}</Body>
+          {demo.isPending ? <ActivityIndicator size="small" color={theme.green} /> : <Ionicons name="sparkles" size={14} color={theme.brandText} />}
+          <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{ka ? "სადემონსტრაციო თრექინგ კოდი" : "Use a demo tracking code"}</Body>
         </Pressable>
       </TourTarget>
 
@@ -140,12 +140,12 @@ export default function AddIncoming() {
             const on = courier === m.on;
             return (
               <Pressable key={String(m.on)} onPress={() => setCourier(m.on)} style={{ flexDirection: "row", alignItems: "center", gap: space.md, padding: space.md, borderRadius: radius.md, borderWidth: 1.5, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint : theme.card }}>
-                <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: on ? theme.tint2 : theme.paper, alignItems: "center", justifyContent: "center" }}><Ionicons name={m.icon} size={18} color={theme.greenDeep} /></View>
+                <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: on ? theme.tint2 : theme.paper, alignItems: "center", justifyContent: "center" }}><Ionicons name={m.icon} size={18} color={theme.brandText} /></View>
                 <View style={{ flex: 1, minWidth: 0 }}>
                   <Body weight="700" size={font.s13}>{m.title}</Body>
                   <Body muted size={font.s11} style={{ marginTop: 1 }}>{m.sub}</Body>
                 </View>
-                <Ionicons name={on ? "radio-button-on" : "radio-button-off"} size={20} color={on ? theme.greenDeep : theme.faint} />
+                <Ionicons name={on ? "radio-button-on" : "radio-button-off"} size={20} color={on ? theme.brandText : theme.faint} />
               </Pressable>
             );
           })}
@@ -158,7 +158,7 @@ export default function AddIncoming() {
               const on = a.id === address?.id;
               return (
                 <Pressable key={a.id} onPress={() => setAddressId(a.id)} style={{ maxWidth: 240, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: radius.pill, borderWidth: 1, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint2 : theme.card }}>
-                  <Ionicons name="location-outline" size={14} color={on ? theme.greenDeep : theme.mut} />
+                  <Ionicons name="location-outline" size={14} color={on ? theme.brandText : theme.mut} />
                   <Body size={font.s12} weight={on ? "700" : "500"} numberOfLines={1} style={{ flexShrink: 1 }}>{a.title ?? a.address ?? "—"}</Body>
                 </Pressable>
               );

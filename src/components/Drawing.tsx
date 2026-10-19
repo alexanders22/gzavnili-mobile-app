@@ -10,6 +10,7 @@ import { SHOP_XML } from "@/drawings/shop";
 import { MONEY_XML } from "@/drawings/money";
 import { SUPPORT_XML } from "@/drawings/support";
 import { HOW_XML } from "@/drawings/how";
+import { Illustration, type IllustrationName } from "./Illustration";
 
 export const INK = "#16202A";
 
@@ -44,7 +45,13 @@ function Paper({ children, style }: { children: React.ReactNode; style?: StylePr
   return <View style={[isDark ? { backgroundColor: "#F3F1EC", borderRadius: 20, padding: 6 } : null, style]}>{children}</View>;
 }
 
-export function Drawing({ name, width, float = false, style }: { name: keyof typeof DRAWINGS; width: number; float?: boolean; style?: StyleProp<ViewStyle> }) {
+/** The landing's page illustrations (parcels, shop, money, how, support, prices) with dark twins. */
+export function Drawing({ name, width, float = false, style }: { name: IllustrationName; width: number; float?: boolean; style?: StyleProp<ViewStyle> }) {
+  return <Illustration name={name} width={width} float={float} style={style} />;
+}
+
+/** The original bundle's ink sketch (kept for the sign-in fallback); sits on paper in dark mode. */
+export function Sketch({ name, width, float = false, style }: { name: keyof typeof DRAWINGS; width: number; float?: boolean; style?: StyleProp<ViewStyle> }) {
   const { xml, ratio } = DRAWINGS[name];
   const anim = useFloat(float ? 5 : 0);
   return (
@@ -63,10 +70,11 @@ export function Note({ children, align = "right", size = 18, tilt = -5, color, h
   const { theme } = useTokens();
   const lang = useLang();
   const ink = color ?? theme.ink;
-  const fs = lang === "ka" ? size * 0.78 : size;
+  // Caveat runs small for its size; DM Maro (Georgian) is tall, so it gets a taller line.
+  const fs = lang === "ka" ? size * 0.82 : size * 1.25;
   return (
     <View style={[{ transform: [{ rotate: `${tilt}deg` }], alignItems: align === "right" ? "flex-end" : "flex-start" }, style]}>
-      <Text style={[noteFont(lang), { color: ink, fontSize: fs, lineHeight: fs * 1.18, textAlign: align }]}>{children}</Text>
+      <Text style={[noteFont(lang), { color: ink, fontSize: fs, lineHeight: fs * (lang === "ka" ? 1.5 : 1.05), textAlign: align }]}>{children}</Text>
       {heart ? (
         <Svg width={22} height={22} viewBox="0 0 24 24" style={{ marginTop: 4 }}>
           <Path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" fill="none" stroke={color ?? theme.brandText} strokeWidth={1.7} strokeLinejoin="round" />
@@ -76,10 +84,10 @@ export function Note({ children, align = "right", size = 18, tilt = -5, color, h
   );
 }
 
-type BandProps = { name: keyof typeof DRAWINGS; note: string; bg?: string; ink?: string; width?: number; style?: StyleProp<ViewStyle> };
+type BandProps = { name: IllustrationName; note: string; bg?: string; ink?: string; width?: number; style?: StyleProp<ViewStyle> };
 
 /** Tinted band: handwritten note on the left, floating sketch on the right. */
-export function DrawnBand({ name, note, bg, ink, width = 150, style }: BandProps) {
+export function DrawnBand({ name, note, bg, ink, width = 168, style }: BandProps) {
   const { theme } = useTokens();
   return (
     <View style={[{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8, backgroundColor: bg ?? theme.tint, borderRadius: 24, paddingLeft: 18, paddingRight: 10, paddingVertical: 12, overflow: "hidden" }, style]}>

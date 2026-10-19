@@ -128,7 +128,7 @@ export default function Pay() {
           const on = mode === m.key;
           return (
             <Pressable key={m.key} onPress={() => setModeOverride(m.key)} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, flexDirection: "row", alignItems: "center", gap: space.sm, padding: space.md, borderRadius: radius.md, borderWidth: 1.5, borderColor: on ? theme.greenDeep : theme.line, backgroundColor: on ? theme.tint : theme.card }}>
-              <Ionicons name={m.icon} size={20} color={theme.greenDeep} />
+              <Ionicons name={m.icon} size={20} color={theme.brandText} />
               <View style={{ flex: 1, minWidth: 0 }}>
                 <Body weight="700" size={font.s13} numberOfLines={1}>{m.label}</Body>
                 <Body muted size={font.s11} numberOfLines={1}>{m.sub}</Body>

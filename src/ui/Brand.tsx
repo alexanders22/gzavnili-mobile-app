@@ -1,9 +1,10 @@
-import React from "react";
-import Svg, { Path } from "react-native-svg";
+import React, { useEffect, useRef } from "react";
+import { Animated, Easing, Platform, View } from "react-native";
+import Svg, { ClipPath, Defs, G, Path, Polygon } from "react-native-svg";
 import { useTokens } from "./index";
 
-// Bird mark — the logo's flying bird (viewBox 2 2 52 54).
-const BIRD =
+// Logo mark — the flying bird (viewBox 0 0 56 58 in the sprite; drawn here with a 2-unit inset).
+export const MARK =
   "M52.8623 16.9605C52.8623 17.0807 52.7806 17.1718 52.662 17.1931L39.6778 19.023C40.3875 21.3258 41.1905 24.8421 40.2358 29.0058C39.4328 32.4988 37.4827 35.3929 34.5934 37.3759C31.5544 39.4578 28.2782 40.0451 25.9761 39.9598L11.0554 54.8411H3L19.3732 38.5138C16.8397 37.5 14.3918 35.9822 12.2667 34.0612C2.25532 25.0321 2.28254 12.1765 4.14521 3L27.9768 23.9756V31.3222L8.89909 14.5317C9.08964 18.8834 10.4857 25.0301 15.9628 29.9808C19.6104 33.2742 24.2301 34.9529 28.0235 34.3481C31.4941 33.7995 34.1073 31.3125 34.8423 27.8602C35.6569 24.0299 34.4592 20.5698 31.2978 17.8657L34.9492 14.2293L52.664 16.7318C52.7826 16.7473 52.8643 16.8422 52.8643 16.9605H52.8623Z";
 
 // "Gzavnili" wordmark glyphs (viewBox 0 0 198 72).
@@ -22,7 +23,7 @@ export function BirdMark({ size = 24, color }: { size?: number; color?: string }
   const { theme } = useTokens();
   return (
     <Svg width={size} height={size} viewBox="2 2 52 54">
-      <Path d={BIRD} fill={color ?? theme.ink} />
+      <Path d={MARK} fill={color ?? theme.ink} />
     </Svg>
   );
 }
@@ -34,7 +35,62 @@ export function BrandLogo({ size = 26, color }: { size?: number; color?: string 
   return (
     <Svg width={w} height={h} viewBox="0 0 198 72">
       {WORD.map((d, i) => <Path key={i} d={d} fill={color ?? theme.ink} />)}
-      <Path d={BIRD} fill={theme.green} />
+      <Path d={MARK} fill={theme.green} />
     </Svg>
+  );
+}
+
+// The flying mark, as on the landing: the wing (everything above the shoulder line y=27.5, left of the
+// neck) squashes and skews about that line so the joint never opens; the whole bird bobs with each beat.
+const SHOULDER = 27.5;
+const WING = "0,0 29.5,0 29.5,27.5 0,27.5";
+const BODY_CUT = "M-5 -5H70V70H-5Z M0 0L29.5 0L29.5 27.2L0 27.2Z";
+let clipSeq = 0;
+
+export function FlyingMark({ size = 56, color, float = false, glow = false }: { size?: number; color?: string; float?: boolean; glow?: boolean }) {
+  const { theme, isDark } = useTokens();
+  const fill = color ?? theme.green;
+  const flap = useRef(new Animated.Value(0)).current;
+  const bob = useRef(new Animated.Value(0)).current;
+  const ids = useRef({ w: `fmw${clipSeq++}`, b: `fmb${clipSeq++}` }).current;
+  useEffect(() => {
+    const ease = Easing.bezier(0.45, 0, 0.55, 1);
+    const a = Animated.loop(Animated.sequence([
+      Animated.timing(flap, { toValue: 1, duration: 420, easing: ease, useNativeDriver: false }),
+      Animated.timing(flap, { toValue: 0, duration: 420, easing: ease, useNativeDriver: false }),
+    ]));
+    const b = Animated.loop(Animated.sequence([
+      Animated.timing(bob, { toValue: 1, duration: 840, easing: ease, useNativeDriver: false }),
+      Animated.timing(bob, { toValue: 0, duration: 840, easing: ease, useNativeDriver: false }),
+    ]));
+    a.start(); b.start();
+    return () => { a.stop(); b.stop(); };
+  }, [flap, bob]);
+  const s = size / 56;
+  const h = size * (58 / 56);
+  // The wing layer is a full-size Svg; pivot its transform on the shoulder line instead of the view centre.
+  const pivot = (SHOULDER - 29) * s;
+  const bobAmp = float ? size * 0.06 : size * 0.025;
+  // Soft glow around the bird itself (web drop-shadow follows the shape; a box shadow would draw a square).
+  const shadow = (glow || isDark) && Platform.OS === "web" ? ({ filter: `drop-shadow(0 0 ${Math.max(4, size * 0.12)}px rgba(106,214,125,0.6))` } as any) : null;
+  return (
+    <Animated.View style={[{ width: size, height: h, transform: [{ translateY: bob.interpolate({ inputRange: [0, 1], outputRange: [bobAmp, -bobAmp] }) }] }, shadow]}>
+      <Svg width={size} height={h} viewBox="0 0 56 58" style={{ position: "absolute" }}>
+        <Defs><ClipPath id={ids.b}><Path d={BODY_CUT} clipRule="evenodd" /></ClipPath></Defs>
+        <G clipPath={`url(#${ids.b})`}><Path d={MARK} fill={fill} /></G>
+      </Svg>
+      <Animated.View style={{ position: "absolute", width: size, height: h, transform: [
+        { translateY: pivot },
+        { scaleY: flap.interpolate({ inputRange: [0, 1], outputRange: [1.04, 0.42] }) },
+        { skewX: flap.interpolate({ inputRange: [0, 1], outputRange: ["4deg", "-14deg"] }) },
+        { translateY: -pivot },
+      ] }}>
+        <Svg width={size} height={h} viewBox="0 0 56 58">
+          <Defs><ClipPath id={ids.w}><Polygon points={WING} /></ClipPath></Defs>
+          <G clipPath={`url(#${ids.w})`}><Path d={MARK} fill={fill} /></G>
+        </Svg>
+      </Animated.View>
+      <View />
+    </Animated.View>
   );
 }

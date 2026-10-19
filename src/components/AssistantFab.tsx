@@ -4,7 +4,7 @@ import { router, usePathname } from "expo-router";
 import { useSettings } from "@/lib/settings";
 import { useIsDesktop } from "@/lib/layout";
 import { useTokens } from "@/ui";
-import { DrawnBird } from "./DrawnBird";
+import { FlyingMark } from "@/ui/Brand";
 
 const HIDDEN_ON = ["/assistant", "/sign-in"];
 
@@ -21,7 +21,7 @@ export function AssistantFab() {
       accessibilityLabel="Gzavnili assistant"
       style={({ pressed }) => ({ position: "absolute", right: desktop ? 28 : 18, bottom: desktop ? 28 : 96, width: 58, height: 58, borderRadius: 29, backgroundColor: theme.green, alignItems: "center", justifyContent: "center", shadowColor: "#000", shadowOpacity: 0.2, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 6, zIndex: 900, transform: [{ scale: pressed ? 0.94 : 1 }] })}
     >
-      <DrawnBird size={30} fill="#FFFFFF" />
+      <FlyingMark size={30} color="#FFFFFF" />
       <View style={{ position: "absolute", top: 4, right: 6, width: 10, height: 10, borderRadius: 5, backgroundColor: theme.red }} />
     </Pressable>
   );

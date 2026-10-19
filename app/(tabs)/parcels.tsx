@@ -202,7 +202,7 @@ function OutgoingList() {
   if (!data?.length) {
     return (
       <Card style={{ alignItems: "center", paddingVertical: 40, marginTop: space.md }}>
-        <Ionicons name="paper-plane-outline" size={30} color={theme.greenDeep} />
+        <Ionicons name="paper-plane-outline" size={30} color={theme.brandText} />
         <Body weight="700" size={font.s16} style={{ marginTop: space.md }}>{ka ? "გზავნილები არ გაქვს" : "No shipments yet"}</Body>
         <Body muted size={font.s12} style={{ marginTop: 6, textAlign: "center" }}>{ka ? "გაგზავნე ამანათი აშშ-ში, ევროპაში ან თურქეთში" : "Send a parcel to the USA, Europe or Türkiye"}</Body>
         <Btn label={ka ? "გაგზავნა" : "Send a parcel"} icon="paper-plane-outline" onPress={() => router.push("/add-outgoing" as any)} style={{ marginTop: space.lg, alignSelf: "stretch" }} />

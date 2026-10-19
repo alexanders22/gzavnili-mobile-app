@@ -86,7 +86,7 @@ export function AddressSheet({ visible, onClose, onPicked, saving, error }: { vi
       </View>
       <Pressable onPress={() => setSave((s) => !s)} style={[styles.row, { gap: space.md, marginTop: space.md }]}>
         <View style={{ width: 22, height: 22, borderRadius: 7, alignItems: "center", justifyContent: "center", backgroundColor: save ? theme.green : "transparent", borderWidth: save ? 0 : 1.5, borderColor: theme.line }}>
-          {save ? <Ionicons name="checkmark" size={14} color={theme.greenDeep} /> : null}
+          {save ? <Ionicons name="checkmark" size={14} color={theme.brandText} /> : null}
         </View>
         <Body size={font.s13} weight="600" style={{ flex: 1, minWidth: 0 }}>{ka ? "შეინახე მისამართი შემდეგისთვის" : "Save this address for next time"}</Body>
       </Pressable>

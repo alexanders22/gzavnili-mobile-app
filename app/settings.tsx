@@ -50,9 +50,9 @@ export default function Settings() {
           const on = settings.mode === m;
           return (
             <Card key={m} style={{ flex: 1, borderColor: on ? theme.green : theme.line, borderWidth: on ? 2 : 1 }} onPress={() => settings.setMode(m)}>
-              <View style={{ height: 48, borderRadius: radius.sm, backgroundColor: m === "dark" ? "#16222B" : "#F3F1EC", marginBottom: space.md, justifyContent: "center", paddingHorizontal: 10, gap: 5 }}>
+              <View style={{ height: 48, borderRadius: radius.sm, backgroundColor: m === "dark" ? "#0B1016" : "#F3F1EC", marginBottom: space.md, justifyContent: "center", paddingHorizontal: 10, gap: 5 }}>
                 <View style={{ height: 5, width: "65%", borderRadius: 3, backgroundColor: theme.green }} />
-                <View style={{ height: 5, width: "40%", borderRadius: 3, backgroundColor: m === "dark" ? "#2C3E4B" : "#DEDCD5" }} />
+                <View style={{ height: 5, width: "40%", borderRadius: 3, backgroundColor: m === "dark" ? "rgba(255,255,255,0.18)" : "#DEDCD5" }} />
               </View>
               <Body weight="600" size={font.s13}>{m === "dark" ? `🌙 ${t("dark")}` : `☀️ ${t("light")}`}</Body>
             </Card>

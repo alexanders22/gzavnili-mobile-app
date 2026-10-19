@@ -61,7 +61,7 @@ function Chip({ icon, label, onPress }: { icon: React.ComponentProps<typeof Ioni
   const { theme } = useTokens();
   return (
     <Pressable onPress={onPress} style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: theme.paper }}>
-      <Ionicons name={icon} size={14} color={theme.greenDeep} />
+      <Ionicons name={icon} size={14} color={theme.brandText} />
       <Body size={font.s12} weight="600">{label}</Body>
     </Pressable>
   );
@@ -72,7 +72,7 @@ export function PickupLocationCard({ location, ka }: { location: PickupLocation;
   return (
     <Card>
       <View style={[styles.row, { gap: space.md, alignItems: "flex-start" }]}>
-        <View style={{ width: 40, height: 40, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="business-outline" size={19} color={theme.greenDeep} /></View>
+        <View style={{ width: 40, height: 40, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="business-outline" size={19} color={theme.brandText} /></View>
         <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
           <Body weight="700" size={font.s16}>{locationName(location, ka)}</Body>
           <Body muted size={font.s12}>{locationAddress(location, ka)}</Body>

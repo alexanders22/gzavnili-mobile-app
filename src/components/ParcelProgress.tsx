@@ -44,7 +44,7 @@ export function ParcelProgress({ status, eta, direction = "in" }: { status?: str
         ))}
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 7, gap: space.sm }}>
-        <Body size={font.s11} weight="700" numberOfLines={1} style={{ color: theme.greenDeep }}>{ka ? stages[idx].ka : stages[idx].en}</Body>
+        <Body size={font.s11} weight="700" numberOfLines={1} style={{ color: theme.brandText }}>{ka ? stages[idx].ka : stages[idx].en}</Body>
         <Body muted size={font.s11} numberOfLines={1}>{eta || `${idx + 1}/${stages.length}`}</Body>
       </View>
     </View>

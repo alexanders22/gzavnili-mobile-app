@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { Body } from "@/ui";
-import { BirdMark } from "@/ui/Brand";
+import { FlyingMark } from "@/ui/Brand";
 
 const DURATION = 1400;
 const BG = "#6AD67D";
@@ -37,7 +37,7 @@ export function LaunchSplash({ ready, onDone }: { ready: boolean; onDone: () => 
           { rotate: inAnim.interpolate({ inputRange: [0, 1], outputRange: ["-18deg", "0deg"] }) },
           { scaleY: flap.interpolate({ inputRange: [0, 1], outputRange: [1, 0.9] }) },
         ] }}>
-          <BirdMark size={96} color={INK} />
+          <FlyingMark size={96} color={INK} />
         </Animated.View>
         <Animated.View style={{ alignItems: "center", marginTop: 18, opacity: inAnim, transform: [{ translateY: inAnim.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }] }}>
           <Body weight="800" size={32} style={{ color: INK, letterSpacing: -0.5 }}>Gzavnili</Body>

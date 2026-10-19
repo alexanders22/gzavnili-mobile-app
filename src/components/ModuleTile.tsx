@@ -26,7 +26,7 @@ export function ModuleTile({ module }: { module: AppModule }) {
     <Card style={{ height: TILE_HEIGHT, justifyContent: "flex-start" }} onPress={() => router.push(module.route as any)}>
       <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
         <View style={{ width: 34, height: 34, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-          <Ionicons name={`${module.icon}-outline` as any} size={17} color={theme.greenDeep} />
+          <Ionicons name={`${module.icon}-outline` as any} size={17} color={theme.brandText} />
         </View>
         <View style={{ flex: 1 }} />
         {isNewModule(module) ? <NewBadge /> : null}

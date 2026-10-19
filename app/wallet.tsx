@@ -104,7 +104,7 @@ export default function WalletScreen() {
                       {i > 0 ? <Divider /> : null}
                       <View style={[styles.row, { gap: space.md, paddingVertical: 13 }]}>
                         <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: plus ? theme.tint2 : theme.paper, alignItems: "center", justifyContent: "center" }}>
-                          <Ionicons name={kind.icon} size={17} color={plus ? theme.greenDeep : theme.mut} />
+                          <Ionicons name={kind.icon} size={17} color={plus ? theme.brandText : theme.mut} />
                         </View>
                         <View style={{ flex: 1, minWidth: 0 }}>
                           <Body size={font.s13} weight="600" numberOfLines={1}>{ka ? kind.ka : kind.en}</Body>
@@ -159,7 +159,7 @@ export default function WalletScreen() {
         {newBalance !== null ? (
           <View style={{ alignItems: "center" }}>
             <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="checkmark" size={30} color={theme.greenDeep} />
+              <Ionicons name="checkmark" size={30} color={theme.brandText} />
             </View>
             <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "ბალანსი შეივსა" : "Balance topped up"}</Body>
             <Body muted size={font.s12} style={{ marginTop: 4, textAlign: "center" }}>{ka ? "ახლანდელი ბალანსი" : "New balance"}: {Number(newBalance).toFixed(2)} ₾</Body>
@@ -174,7 +174,7 @@ export default function WalletScreen() {
                 const on = !custom.trim() && preset === p;
                 return (
                   <Pressable key={p} onPress={() => { setPreset(p); setCustom(""); }} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, alignItems: "center", paddingVertical: 12, borderRadius: radius.md, borderWidth: 1, borderColor: on ? theme.green : theme.line, backgroundColor: on ? theme.tint2 : theme.card }}>
-                    <Body weight="700" size={font.s14} style={{ color: on ? theme.greenDeep : theme.ink }}>{p} ₾</Body>
+                    <Body weight="700" size={font.s14} style={{ color: on ? theme.brandText : theme.ink }}>{p} ₾</Body>
                   </Pressable>
                 );
               })}

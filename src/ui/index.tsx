@@ -1,12 +1,13 @@
 import React from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, Text, TextStyle, View, ViewStyle, StyleProp } from "react-native";
+import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextStyle, View, ViewStyle, StyleProp } from "react-native";
 import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 import { Ionicons } from "@/ui/Icon";
-import { darkTheme, font, lightTheme, radius, space, type Theme } from "@/lib/theme";
+import { darkTheme, font, glass, lightTheme, radius, space, type Theme } from "@/lib/theme";
 import { useIsDark, useSettings } from "@/lib/settings";
-import { displayFont, textFont } from "@/lib/fonts";
+import { displayFont, monoFont, textFont } from "@/lib/fonts";
 import { CONTENT_MAX, useIsDesktop } from "@/lib/layout";
 import { AppBottomNav, AppHeader, BOTTOM_NAV_SPACE } from "./AppChrome";
+import { Ambient } from "@/components/Ambient";
 
 export function useTokens(): { theme: Theme; isDark: boolean } {
   const isDark = useIsDark();
@@ -24,13 +25,14 @@ type ScreenProps = {
 
 /** Page shell: safe area, cream background, optional header + floating bottom nav. */
 export function Screen({ children, scroll = true, edges = ["top"], maxWidth = CONTENT_MAX, title, back, chrome = true }: ScreenProps) {
-  const { theme } = useTokens();
+  const { theme, isDark } = useTokens();
   const desktop = useIsDesktop();
   const pad = desktop ? 32 : space.lg;
   const showChrome = chrome && !desktop;
   const Body = scroll ? ScrollView : View;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.cream }} edges={desktop ? [] : edges}>
+      {isDark ? <Ambient /> : null}
       {showChrome ? <AppHeader title={title} back={back} /> : null}
       <Body
         style={{ flex: 1 }}
@@ -64,11 +66,17 @@ export function Body({ children, muted, size = font.s14, weight = "400", style, 
   );
 }
 
+/** Web-only frosted glass (backdrop blur) for dark surfaces. */
+export const glassStyle = (isDark: boolean): ViewStyle | null =>
+  isDark ? ({ borderTopColor: glass.edge, ...(Platform.OS === "web" ? { backdropFilter: glass.blur, WebkitBackdropFilter: glass.blur } : {}) } as any) : null;
+
 export function Card({ children, style, onPress }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void }) {
-  const { theme } = useTokens();
+  const { theme, isDark } = useTokens();
   const base: ViewStyle = {
     backgroundColor: theme.card, borderRadius: radius.lg, borderWidth: 1, borderColor: theme.line, padding: space.lg,
-    shadowColor: "#121D25", shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 8 },
+    ...(isDark
+      ? { shadowColor: "#000", shadowOpacity: 0.6, shadowRadius: 28, shadowOffset: { width: 0, height: 14 }, ...glassStyle(true) }
+      : { shadowColor: "#121D25", shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 8 } }),
   };
   if (onPress) return <Pressable onPress={onPress} style={({ pressed }) => [base, style, { opacity: pressed ? 0.7 : 1 }]}>{children}</Pressable>;
   return <View style={[base, style]}>{children}</View>;
@@ -76,15 +84,20 @@ export function Card({ children, style, onPress }: { children: React.ReactNode; 
 
 type BtnProps = { label: string; onPress?: () => void; variant?: "primary" | "dark" | "outline" | "danger"; disabled?: boolean; loading?: boolean; icon?: keyof typeof Ionicons.glyphMap; style?: StyleProp<ViewStyle> };
 export function Btn({ label, onPress, variant = "primary", disabled, loading, icon, style }: BtnProps) {
-  const { theme } = useTokens();
+  const { theme, isDark } = useTokens();
   const lang = useSettings((s) => s.lang);
   const bg = { primary: theme.green, dark: theme.navy, outline: "transparent", danger: theme.red }[variant];
   const fg = { primary: "#121D25", dark: "#FFFFFF", outline: theme.ink, danger: "#FFFFFF" }[variant];
+  // Primary buttons carry the brand glow (soft green shadow; stronger on dark glass).
+  const glow: ViewStyle | null = variant === "primary"
+    ? { shadowColor: isDark ? theme.green : "#40804B", shadowOpacity: isDark ? 0.45 : 0.25, shadowRadius: isDark ? 24 : 16, shadowOffset: { width: 0, height: isDark ? 0 : 8 } }
+    : variant === "outline" && isDark ? glassStyle(true) : null;
   return (
     <Pressable
       onPress={disabled || loading ? undefined : onPress}
       style={({ pressed }) => [
         { backgroundColor: bg, borderRadius: radius.pill, paddingVertical: 15, paddingHorizontal: space.xl, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: space.sm, borderWidth: variant === "outline" ? 1 : 0, borderColor: theme.line, opacity: disabled ? 0.45 : pressed ? 0.85 : 1 },
+        glow,
         style,
       ]}
     >
@@ -105,7 +118,7 @@ export function Pill({ text, tone = "neutral" }: { text: string; tone?: "neutral
   const lang = useSettings((s) => s.lang);
   const tones = {
     neutral: { bg: theme.lineSoft, fg: theme.mut }, ok: { bg: theme.tint2, fg: theme.greenDeep },
-    warn: { bg: "#FFF1E7", fg: theme.orange }, info: { bg: "#E7F1FF", fg: theme.blue },
+    warn: { bg: theme.pinkTint, fg: theme.pinkInk }, info: { bg: theme.skyTint, fg: theme.skyInk },
   }[tone];
   return (
     <View style={{ backgroundColor: tones.bg, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 5 }}>
@@ -118,7 +131,7 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
   const { theme } = useTokens();
   const lang = useSettings((s) => s.lang);
   return (
-    <Text style={[{ color: theme.faint, fontSize: font.s11, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: space.sm, marginTop: space.xl }, lang === "ka" ? displayFont(lang) : textFont(lang, "600"), { letterSpacing: lang === "ka" ? 0.4 : 1.2 }]}>
+    <Text style={[{ color: theme.mut, fontSize: font.s11, textTransform: "uppercase", marginBottom: space.sm, marginTop: space.xl }, lang === "ka" ? displayFont(lang) : monoFont(), { letterSpacing: lang === "ka" ? 0.4 : 1.5 }]}>
       {children}
     </Text>
   );
@@ -130,7 +143,7 @@ export function ToggleRow({ title, subtitle, value, onValueChange, icon, disable
     <View style={{ flexDirection: "row", alignItems: "center", gap: space.md, paddingVertical: 13, opacity: disabled ? 0.55 : 1 }}>
       {icon ? (
         <View style={{ width: 34, height: 34, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-          <Ionicons name={icon} size={17} color={theme.greenDeep} />
+          <Ionicons name={icon} size={17} color={theme.brandText} />
         </View>
       ) : null}
       <View style={{ flex: 1 }}>

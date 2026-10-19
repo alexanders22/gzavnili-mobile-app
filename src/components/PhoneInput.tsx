@@ -49,7 +49,7 @@ export function PhoneInput({ value, onChange, placeholder }: { value: PhoneValue
                 <Body size={font.s18}>{d.flag}</Body>
                 <Body weight={on ? "700" : "500"} style={{ flex: 1, minWidth: 0 }} numberOfLines={1}>{ka ? d.nameKa : d.name}</Body>
                 <Body muted weight="600">{d.dial}</Body>
-                {on ? <Ionicons name="checkmark" size={16} color={theme.greenDeep} /> : null}
+                {on ? <Ionicons name="checkmark" size={16} color={theme.brandText} /> : null}
               </Pressable>
             );
           })}

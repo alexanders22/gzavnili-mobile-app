@@ -30,26 +30,30 @@ export const lightTheme = {
   skyInk: "#1F4E8C",
 };
 
+// Dark = the landing's liquid-glass look: near-black page, translucent white surfaces, glowing green.
 export const darkTheme: Theme = {
   ...palette,
-  tint: "#15291D",
-  tint2: "#1B3524",
-  navy: "#070D12",
-  navySoft: "#101A21",
-  cream: "#0E161C",
-  paper: "#16222B",
-  card: "#16222B",
-  line: "#263844",
-  lineSoft: "#1D2C36",
-  ink: "#EDF2F5",
-  mut: "#A0B1BD",
-  faint: "#71838F",
-  brandText: "#88DE97",
-  pinkTint: "#2B1F22",
-  pinkInk: "#F2A39C",
-  skyTint: "#17263A",
-  skyInk: "#9CC3F2",
+  tint: "rgba(106,214,125,0.07)",
+  tint2: "rgba(106,214,125,0.16)",
+  navy: "rgba(255,255,255,0.12)",
+  navySoft: "rgba(255,255,255,0.18)",
+  cream: "#06080C",
+  paper: "rgba(255,255,255,0.035)",
+  card: "rgba(255,255,255,0.055)",
+  line: "rgba(255,255,255,0.09)",
+  lineSoft: "rgba(255,255,255,0.06)",
+  ink: "#F3F5F8",
+  mut: "#949DA9",
+  faint: "#66707C",
+  brandText: "#8BDF9A",
+  pinkTint: "rgba(255,130,120,0.07)",
+  pinkInk: "#FF9C93",
+  skyTint: "rgba(120,165,255,0.07)",
+  skyInk: "#9CC0FF",
 };
+
+/** Glass edge highlight and glow used by dark-theme surfaces. */
+export const glass = { edge: "rgba(255,255,255,0.22)", border: "rgba(255,255,255,0.10)", blur: "blur(22px) saturate(170%)", navBg: "rgba(10,12,16,0.55)" } as const;
 
 export type Theme = typeof lightTheme;
 

@@ -20,13 +20,13 @@ export function DealsStrip() {
       <View style={[styles.between, { marginBottom: space.md, gap: space.sm }]}>
         <View style={[styles.row, { gap: space.sm, flexShrink: 1, minWidth: 0 }]}>
           <View style={{ width: 26, height: 26, borderRadius: 13, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="sparkles" size={13} color={theme.greenDeep} />
+            <Ionicons name="sparkles" size={13} color={theme.brandText} />
           </View>
           <Body weight="700" size={font.s16} numberOfLines={1} style={{ flexShrink: 1, minWidth: 0 }}>{ka ? "შენთვის შერჩეული" : "Recommended for you"}</Body>
         </View>
         <Pressable onPress={openShop} hitSlop={8} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: theme.tint2, borderRadius: radius.pill, paddingLeft: 12, paddingRight: 9, paddingVertical: 6, opacity: pressed ? 0.75 : 1 })}>
-          <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{ka ? "ყველა" : "View all"}</Body>
-          <Ionicons name="arrow-forward" size={13} color={theme.greenDeep} />
+          <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{ka ? "ყველა" : "View all"}</Body>
+          <Ionicons name="arrow-forward" size={13} color={theme.brandText} />
         </Pressable>
       </View>
       <Body muted size={font.s12} style={{ marginBottom: space.md }}>

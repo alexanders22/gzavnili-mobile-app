@@ -163,8 +163,8 @@ export function TourOverlay() {
         <View style={{ position: "absolute", left, width: cardW, ...pos, backgroundColor: theme.card, borderRadius: radius.lg, padding: space.lg, shadowColor: "#000", shadowOpacity: 0.3, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 16 }}>
           <View style={styles.between}>
             <View style={[styles.row, { gap: 6, flexShrink: 1, minWidth: 0 }]}>
-              <Ionicons name={tour.icon as any} size={14} color={theme.greenDeep} />
-              <Body size={font.s11} weight="700" numberOfLines={1} style={{ color: theme.greenDeep, letterSpacing: 0.5 }}>{(ka ? tour.title.ka : tour.title.en).toUpperCase()}</Body>
+              <Ionicons name={tour.icon as any} size={14} color={theme.brandText} />
+              <Body size={font.s11} weight="700" numberOfLines={1} style={{ color: theme.brandText, letterSpacing: 0.5 }}>{(ka ? tour.title.ka : tour.title.en).toUpperCase()}</Body>
             </View>
             <Body size={font.s11} muted>{index + 1} / {tour.steps.length}</Body>
           </View>
@@ -178,8 +178,8 @@ export function TourOverlay() {
             <Pressable onPress={stop} hitSlop={10}><Body size={font.s12} weight="600" muted>{ka ? "გასვლა" : "Exit"}</Body></Pressable>
             {phase === "tapping" || (phase === "showing" && step.press) ? (
               <View style={[styles.row, { gap: 6 }]}>
-                <Ionicons name="hand-left-outline" size={14} color={theme.greenDeep} />
-                <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{ka ? "დაჭერა…" : "Tapping…"}</Body>
+                <Ionicons name="hand-left-outline" size={14} color={theme.brandText} />
+                <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{ka ? "დაჭერა…" : "Tapping…"}</Body>
               </View>
             ) : (
               <Pressable onPress={finish ? stop : next} style={({ pressed }) => ({ backgroundColor: theme.green, borderRadius: radius.pill, paddingHorizontal: 16, paddingVertical: 8, opacity: pressed ? 0.8 : 1 })}>

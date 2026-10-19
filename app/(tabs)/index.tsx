@@ -10,7 +10,7 @@ import { useCustomer, useLoyalty, useOrders, useStatusQuantity, useUnpaidOrders,
 import { Body, Card, Screen, Title, styles, useTokens } from "@/ui";
 import { Picker } from "@/ui/Picker";
 import { TileGrid } from "@/ui/TileGrid";
-import { DrawnBird } from "@/components/DrawnBird";
+import { FlyingMark } from "@/ui/Brand";
 import { ReelsStrip } from "@/components/ReelsStrip";
 import { DealsStrip } from "@/components/DealsStrip";
 import { TransitAnimation } from "@/components/TransitAnimation";
@@ -71,7 +71,7 @@ export default function Home() {
           <Title>{t("greeting")}{firstName ? `, ${firstName}` : ""}</Title>
           <Body muted style={{ marginTop: 4 }}>{t("homeSub")}</Body>
         </View>
-        <DrawnBird size={56} float />
+        <FlyingMark size={56} float />
       </View>
 
       {/* Four stat tiles */}
@@ -137,7 +137,7 @@ export default function Home() {
       <Card style={{ marginTop: space.md, paddingVertical: space.md }} onPress={() => router.push("/calculator" as any)}>
         <View style={[styles.row, { gap: space.md }]}>
           <View style={{ width: 36, height: 36, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="calculator" size={17} color={theme.greenDeep} />
+            <Ionicons name="calculator" size={17} color={theme.brandText} />
           </View>
           <View style={{ flex: 1, minWidth: 0 }}>
             <Body weight="700" size={font.s13} numberOfLines={1}>{ka ? "გაიგე ფასი წინასწარ" : "Price it before you ship"}</Body>
@@ -153,7 +153,7 @@ export default function Home() {
       <View style={[styles.between, { marginTop: space.xl, marginBottom: space.md, gap: space.sm }]}>
         <Body weight="700" size={font.s16} numberOfLines={1} style={{ flexShrink: 1, minWidth: 0 }}>{ka ? "ჩემი მისამართი" : "My address"}</Body>
         <Pressable onPress={() => router.push("/address" as any)} hitSlop={8}>
-          <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{t("viewAll")}</Body>
+          <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{t("viewAll")}</Body>
         </Pressable>
       </View>
       <Card style={{ backgroundColor: theme.navy, borderColor: theme.navy }} onPress={() => router.push("/address" as any)}>
@@ -185,11 +185,11 @@ export default function Home() {
             <View style={[styles.row, { gap: 6 }]}>
               <Body size={font.s18}>🇺🇸</Body>
               <Body size={font.s18}>🇨🇳</Body>
-              <Ionicons name="airplane" size={14} color={theme.greenDeep} />
+              <Ionicons name="airplane" size={14} color={theme.brandText} />
               <Body size={font.s18}>🇬🇪</Body>
             </View>
-            <Body size={font.s22} weight="800" numberOfLines={1} style={{ color: theme.greenDeep, marginTop: 6 }}>{ka ? "$6/კგ-დან" : "From $6 / kg"}</Body>
-            <Body size={font.s12} weight="600" numberOfLines={2} style={{ color: theme.greenDeep, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance & repacking included"}</Body>
+            <Body size={font.s22} weight="800" numberOfLines={1} style={{ color: theme.brandText, marginTop: 6 }}>{ka ? "$6/კგ-დან" : "From $6 / kg"}</Body>
+            <Body size={font.s12} weight="600" numberOfLines={2} style={{ color: theme.brandText, opacity: 0.8 }}>{ka ? "დაზღვევა და გადაფუთვა ფასში" : "Insurance & repacking included"}</Body>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: theme.greenDeep, borderRadius: radius.pill, paddingHorizontal: 15, paddingVertical: 10 }}>
             <Body size={font.s12} weight="700" style={{ color: "#fff" }}>{ka ? "ტარიფები" : "View rates"}</Body>
@@ -200,8 +200,8 @@ export default function Home() {
           {RATE_CHIPS.map((c, i) => (
             <View key={i} style={{ flexGrow: 1, flexBasis: 0, minWidth: 0, alignItems: "center", gap: 2, backgroundColor: "rgba(255,255,255,0.55)", borderRadius: radius.md, paddingVertical: 9 }}>
               <Body size={font.s13}>{c.flag}</Body>
-              <Body size={font.s13} weight="800" style={{ color: theme.greenDeep }}>${c.price}</Body>
-              <Body size={10} weight="600" style={{ color: theme.greenDeep, opacity: 0.7 }}>{c.days} {ka ? "დღე" : "days"}</Body>
+              <Body size={font.s13} weight="800" style={{ color: theme.brandText }}>${c.price}</Body>
+              <Body size={10} weight="600" style={{ color: theme.brandText, opacity: 0.7 }}>{c.days} {ka ? "დღე" : "days"}</Body>
             </View>
           ))}
         </View>

@@ -29,8 +29,8 @@ export default function MyCode() {
           const on = tab === t.id;
           return (
             <Pressable key={t.id} onPress={() => setTab(t.id)} style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 10, borderRadius: radius.pill, backgroundColor: on ? theme.card : "transparent" }}>
-              <Ionicons name={t.icon} size={16} color={on ? theme.greenDeep : theme.mut} />
-              <Body size={font.s13} weight={on ? "700" : "500"} style={{ color: on ? theme.greenDeep : theme.mut }}>{t.label}</Body>
+              <Ionicons name={t.icon} size={16} color={on ? theme.brandText : theme.mut} />
+              <Body size={font.s13} weight={on ? "700" : "500"} style={{ color: on ? theme.brandText : theme.mut }}>{t.label}</Body>
             </Pressable>
           );
         })}
@@ -79,7 +79,7 @@ function RoomCode() {
         {tips.map((t) => (
           <View key={t.icon} style={[styles.row, { gap: space.md }]}>
             <View style={{ width: 32, height: 32, borderRadius: radius.sm, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name={t.icon} size={16} color={theme.greenDeep} />
+              <Ionicons name={t.icon} size={16} color={theme.brandText} />
             </View>
             <Body size={font.s13} style={{ flex: 1, minWidth: 0 }}>{t.text}</Body>
           </View>

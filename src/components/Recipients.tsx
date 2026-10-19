@@ -28,7 +28,7 @@ function Avatar({ name, small }: { name: string; small?: boolean }) {
   const s = small ? 26 : 36;
   return (
     <View style={{ width: s, height: s, borderRadius: s / 2, backgroundColor: theme.tint2, alignItems: "center", justifyContent: "center" }}>
-      <Body weight="700" size={small ? font.s11 : font.s13} style={{ color: theme.greenDeep }}>{(name.trim()[0] ?? "?").toUpperCase()}</Body>
+      <Body weight="700" size={small ? font.s11 : font.s13} style={{ color: theme.brandText }}>{(name.trim()[0] ?? "?").toUpperCase()}</Body>
     </View>
   );
 }
@@ -62,8 +62,8 @@ export function RecipientsEditor({ rows, onChange, defaultCountry = "GE", demoPe
         <View style={[styles.row, { gap: space.md }]}>
           {demoPeople.length ? (
             <Pressable onPress={addDemo} disabled={atMax} hitSlop={8} style={[styles.row, { gap: 5, opacity: atMax ? 0.4 : 1 }]}>
-              <Ionicons name="flask-outline" size={13} color={theme.greenDeep} />
-              <Body size={font.s12} weight="700" style={{ color: theme.greenDeep }}>{ka ? "სადემო" : "Demo"}</Body>
+              <Ionicons name="flask-outline" size={13} color={theme.brandText} />
+              <Body size={font.s12} weight="700" style={{ color: theme.brandText }}>{ka ? "სადემო" : "Demo"}</Body>
             </Pressable>
           ) : null}
           {atMax ? null : <ContactsButton country={defaultCountry} onPick={(c) => fillOrAdd({ first: c.first, last: c.last, phone: c.phone })} />}
@@ -76,7 +76,7 @@ export function RecipientsEditor({ rows, onChange, defaultCountry = "GE", demoPe
             <Pressable key={r.id} disabled={atMax && !rows.some((x) => !touched(x))} onPress={() => fillOrAdd({ first: r.first_name ?? "", last: r.last_name ?? "", phone: parsePhone(r.phone) })} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 6, paddingLeft: 5, paddingRight: 12, paddingVertical: 5, borderRadius: radius.pill, borderWidth: 1, borderColor: theme.line, backgroundColor: theme.card, opacity: pressed ? 0.7 : 1 })}>
               <Avatar name={r.name_en || r.name_ka || "?"} small />
               <Body size={font.s12} weight="600">{ka ? r.name_ka || r.name_en : r.name_en || r.name_ka}</Body>
-              <Ionicons name="add" size={14} color={theme.greenDeep} />
+              <Ionicons name="add" size={14} color={theme.brandText} />
             </Pressable>
           ))}
         </ScrollView>
@@ -107,8 +107,8 @@ export function RecipientsEditor({ rows, onChange, defaultCountry = "GE", demoPe
       })}
       {atMax ? null : (
         <Pressable onPress={() => onChange([...rows, newRecipientRow({ phone: { country: defaultCountry, number: "" } })])} style={({ pressed }) => ({ marginTop: space.md, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 13, borderRadius: radius.md, borderWidth: 1, borderStyle: "dashed", borderColor: theme.greenDeep, backgroundColor: theme.tint, opacity: pressed ? 0.7 : 1 })}>
-          <Ionicons name="person-add-outline" size={16} color={theme.greenDeep} />
-          <Body size={font.s13} weight="700" style={{ color: theme.greenDeep }}>{rows.length ? (ka ? "კიდევ ერთი მიმღები" : "Add another person") : ka ? "მიმღების დამატება" : "Add a person"}</Body>
+          <Ionicons name="person-add-outline" size={16} color={theme.brandText} />
+          <Body size={font.s13} weight="700" style={{ color: theme.brandText }}>{rows.length ? (ka ? "კიდევ ერთი მიმღები" : "Add another person") : ka ? "მიმღების დამატება" : "Add a person"}</Body>
         </Pressable>
       )}
       {hasUnfinished(rows) ? <Body size={font.s12} style={{ color: theme.orange, marginTop: space.sm }}>{ka ? "შეავსე სახელი და ტელეფონი, ან წაშალე" : "Finish each person's name and phone, or remove them"}</Body> : null}
@@ -125,7 +125,7 @@ export function RecipientsSummary({ people }: { people: Recipient[] }) {
     <View style={{ alignSelf: "stretch", marginTop: space.xl }}>
       <View style={styles.between}>
         <Body size={font.s11} weight="700" style={{ color: theme.faint, letterSpacing: 0.6 }}>{(ka ? "მიმღებები" : "Recipients").toUpperCase()}</Body>
-        {fresh ? <Body size={font.s11} weight="700" style={{ color: theme.greenDeep }}>{ka ? `${fresh} ახალი პროფილი` : `${fresh} new ${fresh === 1 ? "profile" : "profiles"}`}</Body> : null}
+        {fresh ? <Body size={font.s11} weight="700" style={{ color: theme.brandText }}>{ka ? `${fresh} ახალი პროფილი` : `${fresh} new ${fresh === 1 ? "profile" : "profiles"}`}</Body> : null}
       </View>
       <View style={{ marginTop: space.sm, borderWidth: 1, borderColor: theme.line, borderRadius: radius.md, paddingHorizontal: space.md }}>
         {people.map((p, i) => (

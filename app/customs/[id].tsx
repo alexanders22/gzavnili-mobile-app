@@ -9,7 +9,7 @@ import { useLang } from "@/lib/i18n";
 import { DEMO } from "@/lib/demo";
 import { useNusxaBundle, useOrderFromList, useSignatureLink, useUpdateCustomStatus } from "@/lib/hooks";
 import { Body, Btn, Card, Divider, Pill, Screen, SectionLabel, Title, styles, useTokens } from "@/ui";
-import { DrawnBird } from "@/components/DrawnBird";
+import { FlyingMark } from "@/ui/Brand";
 import { SignatureFrame } from "@/components/SignatureFrame";
 
 const PAYEE_CODE = "707017021";
@@ -74,7 +74,7 @@ export default function Customs() {
             <Body weight="700" size={font.s16}>{ka ? "განბაჟება გამარტივებულია" : "We simplified customs for you"}</Body>
             {steps.map((s, i) => (
               <View key={s} style={[styles.row, { gap: space.md, marginTop: space.md }]}>
-                <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Body size={font.s11} weight="800" style={{ color: theme.greenDeep }}>{i + 1}</Body></View>
+                <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Body size={font.s11} weight="800" style={{ color: theme.brandText }}>{i + 1}</Body></View>
                 <Body size={font.s13} style={{ flex: 1, minWidth: 0 }}>{s}</Body>
               </View>
             ))}
@@ -107,7 +107,7 @@ export default function Customs() {
       {cs === "2" || cs === "3" ? (
         <Card style={{ marginTop: space.lg }}>
           <View style={[styles.row, { gap: space.md }]}>
-            <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="hourglass-outline" size={19} color={theme.greenDeep} /></View>
+            <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}><Ionicons name="hourglass-outline" size={19} color={theme.brandText} /></View>
             <View style={{ flex: 1, minWidth: 0 }}><Body weight="700">{ka ? "განბაჟება მიმდინარეობს" : "Customs clearance in progress"}</Body></View>
           </View>
           <Body muted size={font.s12} style={{ marginTop: space.md }}>{ka ? "როგორც კი დასრულდება, გამოგიგზავნით დეკლარაციას ხელმოსაწერად. თუ დამატებითი დოკუმენტი დაგვჭირდა — დაგიკავშირდებით." : "Once it completes we'll send you the declaration to sign. If anything else is needed we'll get in touch."}</Body>
@@ -139,7 +139,7 @@ export default function Customs() {
 
       {done ? (
         <Card style={{ marginTop: space.lg, alignItems: "center", paddingVertical: 30 }}>
-          <DrawnBird size={84} float />
+          <FlyingMark size={84} float glow />
           <Body weight="700" size={font.s16} style={{ marginTop: space.lg }}>{ka ? "განბაჟება დასრულდა" : "Customs cleared"}</Body>
           <Body muted size={font.s12} style={{ marginTop: 4, textAlign: "center" }}>{ka ? "ახლა შეგიძლია გადაიხადო მიწოდება" : "You can pay for delivery now"}</Body>
         </Card>

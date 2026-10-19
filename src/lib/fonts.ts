@@ -1,7 +1,7 @@
 import { Platform, TextStyle } from "react-native";
 import type { Lang } from "./settings";
 
-export const FONT_ASSETS = { BOG: require("../../assets/fonts/BOG-UltraBold.ttf") };
+export const FONT_ASSETS = { BOG: require("../../assets/fonts/BOG-UltraBold.ttf"), "DM Maro": require("../../assets/fonts/DM-Maro.ttf") };
 
 const WEIGHT: Record<string, 400 | 500 | 600 | 700 | 800> = {
   normal: 400, "100": 400, "200": 400, "300": 400, "400": 400, "500": 500, "600": 600,
@@ -30,8 +30,19 @@ export function displayFont(lang: Lang): TextStyle {
     : { fontFamily: stack(LATIN[700], GEO[800]), fontWeight: undefined, letterSpacing: -0.8 };
 }
 
+/** Handwritten notes: Caveat for Latin, the Georgian handwriting DM Maro for ka (as on the landing). */
 export function noteFont(lang: Lang): TextStyle {
   return lang === "ka"
-    ? { fontFamily: "NotoSerifGeorgian_500Medium", fontWeight: undefined }
-    : { fontFamily: "InstrumentSerif_400Regular_Italic", fontWeight: undefined };
+    ? { fontFamily: stack("DM Maro", "Caveat_500Medium"), fontWeight: undefined }
+    : { fontFamily: stack("Caveat_500Medium", "DM Maro"), fontWeight: undefined };
+}
+
+/** Eyebrows, labels and numbers: Geist Mono. */
+export function monoFont(): TextStyle {
+  return { fontFamily: stack("GeistMono_500Medium", GEO[500]), fontWeight: undefined };
+}
+
+/** Accent words in titles: Instrument Serif italic (Latin) / BOG (ka). */
+export function accentFont(lang: Lang): TextStyle {
+  return lang === "ka" ? { fontFamily: stack("BOG", GEO[800]), fontWeight: undefined } : { fontFamily: stack("InstrumentSerif_400Regular_Italic", GEO[500]), fontWeight: undefined };
 }

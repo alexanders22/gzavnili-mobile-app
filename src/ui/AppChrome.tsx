@@ -2,10 +2,10 @@ import React from "react";
 import { Pressable, View } from "react-native";
 import { Ionicons } from "@/ui/Icon";
 import { router, usePathname } from "expo-router";
-import { font, radius, space } from "@/lib/theme";
+import { font, glass, radius, space } from "@/lib/theme";
 import { useSettings } from "@/lib/settings";
 import { useLang, useT } from "@/lib/i18n";
-import { Body, useTokens } from "./index";
+import { Body, glassStyle, useTokens } from "./index";
 import { BrandLogo } from "./Brand";
 
 export const HEADER_HEIGHT = 56;
@@ -35,9 +35,9 @@ export function LangToggle() {
 }
 
 export function AppHeader({ title, back }: { title?: string; back?: boolean }) {
-  const { theme } = useTokens();
+  const { theme, isDark } = useTokens();
   return (
-    <View style={{ height: HEADER_HEIGHT, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: space.lg, backgroundColor: theme.cream, borderBottomWidth: 1, borderBottomColor: theme.lineSoft }}>
+    <View style={[{ height: HEADER_HEIGHT, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: space.lg, backgroundColor: isDark ? glass.navBg : theme.cream, borderBottomWidth: 1, borderBottomColor: theme.lineSoft, zIndex: 5 }, isDark ? glassStyle(true) : null, isDark ? { borderTopWidth: 0 } : null]}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.md, flexShrink: 1, minWidth: 0 }}>
         {back ? (
           <Pressable onPress={() => router.back()} hitSlop={12}>
@@ -55,7 +55,7 @@ export function AppHeader({ title, back }: { title?: string; back?: boolean }) {
         </Pressable>
         <Pressable onPress={() => router.push("/settings")} hitSlop={10}>
           <View style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: theme.tint, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="person-outline" size={17} color={theme.greenDeep} />
+            <Ionicons name="person-outline" size={17} color={theme.brandText} />
           </View>
         </Pressable>
       </View>
@@ -67,7 +67,7 @@ type Item = { route: string; icon: keyof typeof Ionicons.glyphMap; on: keyof typ
 
 /** Floating navy pill nav (the native tab bar is hidden). */
 export function AppBottomNav() {
-  const { theme } = useTokens();
+  const { theme, isDark } = useTokens();
   const t = useT();
   const ka = useLang() === "ka";
   const pathname = usePathname();
@@ -80,7 +80,7 @@ export function AppBottomNav() {
   ];
   const active = (r: string) => (r === "/" ? pathname === "/" : pathname.startsWith(r));
   return (
-    <View style={{ position: "absolute", left: 14, right: 14, bottom: 14, height: 74, borderRadius: 28, backgroundColor: theme.navy, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space.sm, shadowColor: "#000", shadowOpacity: 0.25, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 12 }}>
+    <View style={[{ position: "absolute", left: 14, right: 14, bottom: 14, height: 74, borderRadius: 28, backgroundColor: isDark ? "rgba(16,20,26,0.72)" : theme.navy, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space.sm, shadowColor: "#000", shadowOpacity: isDark ? 0.7 : 0.25, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 12 }, isDark ? { borderWidth: 1, borderColor: glass.border, ...glassStyle(true) } : null]}>
       {items.map((it) => {
         const on = active(it.route);
         return (
