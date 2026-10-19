@@ -117,7 +117,7 @@ export function Pill({ text, tone = "neutral" }: { text: string; tone?: "neutral
   const { theme } = useTokens();
   const lang = useSettings((s) => s.lang);
   const tones = {
-    neutral: { bg: theme.lineSoft, fg: theme.mut }, ok: { bg: theme.tint2, fg: theme.greenDeep },
+    neutral: { bg: theme.lineSoft, fg: theme.mut }, ok: { bg: theme.tint2, fg: theme.brandText },
     warn: { bg: theme.pinkTint, fg: theme.pinkInk }, info: { bg: theme.skyTint, fg: theme.skyInk },
   }[tone];
   return (

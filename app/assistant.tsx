@@ -177,7 +177,7 @@ export default function Assistant() {
             { rotate: bird.interpolate({ inputRange: [0, 1, 2], outputRange: ["-20deg", "0deg", "-24deg"] }) },
             { scale: bird.interpolate({ inputRange: [0, 1, 2], outputRange: [0.5, 1, 0.55] }) },
           ] }}>
-          <FlyingMark size={58} float />
+          <FlyingMark size={58} color="#FFFFFF" />
         </Animated.View>
       </Animated.View>
     </SafeAreaView>
